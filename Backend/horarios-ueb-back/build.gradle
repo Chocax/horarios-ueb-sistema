@@ -1,0 +1,75 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '4.1.2'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'co.edu.unbosque'
+version = '1.0.0'
+description = 'horarios-ueb-back'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-restclient'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    // seguridad: login con JWT firmado (HS256) y contraseñas con BCrypt
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    // migraciones versionadas de la base de datos (scripts de la carpeta BD del repositorio)
+    implementation 'org.springframework.boot:spring-boot-starter-flyway'
+    implementation 'org.flywaydb:flyway-mysql'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'com.h2database:h2'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-jdbc-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-jdbc-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-restclient-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-webflux-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
+    testCompileOnly 'org.projectlombok:lombok'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+}
+
+// Los scripts SQL viven en la carpeta BD/ de la raíz del repositorio (fuente única):
+// se copian al classpath como migraciones de Flyway (db/migration).
+def carpetaBd = file('../../BD/migraciones')
+tasks.named('processResources') {
+    from(carpetaBd) {
+        into 'db/migration'
+    }
+    inputs.dir(carpetaBd).optional()
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    // herramienta que regenera BD/migraciones/V3__horario_2026_1.sql (ver GenerarHorarioSemillaTest)
+    systemProperty 'generarSemilla', System.getProperty('generarSemilla', 'false')
+    testLogging { showStandardStreams = System.getProperty('generarSemilla') == 'true' }
+}
+
+// El jar ejecutable se llama siempre igual (lo usa el Dockerfile)
+tasks.named('bootJar') {
+    archiveFileName = 'horarios-ueb-back.jar'
+}
+tasks.named('jar') {
+    enabled = false
+}

@@ -1,0 +1,14 @@
+# Contexto de la imagen del backend: solo hace falta Backend/ y BD/
+Frontend
+Docs
+Extras
+H
+.git
+.claude
+.vscode
+**/node_modules
+**/build
+**/.gradle
+**/.idea
+**/data
+**/*.iml

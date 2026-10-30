@@ -1,0 +1,25 @@
+# Blueprint de Render: crea el servicio web del backend con Docker en el plan gratuito.
+# En Render: New → Blueprint → elija este repositorio. Las variables con sync: false se llenan en el panel.
+services:
+  - type: web
+    name: horarios-ueb-back
+    runtime: docker
+    plan: free
+    region: virginia
+    dockerfilePath: ./Backend/horarios-ueb-back/Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/salud
+    # producción sale de main; develop se integra por pull request y llega a main con otro pull request
+    branch: main
+    autoDeploy: true
+    envVars:
+      - key: DB_URL
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGINS
+        value: https://horarios-ueb.vercel.app

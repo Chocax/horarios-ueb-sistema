@@ -1,0 +1,55 @@
+{
+  // Tareas para Antigravity / VS Code: Terminal → Run Task… (o Ctrl+Shift+P → "Tasks: Run Task")
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Backend: iniciar (perfil local, H2)",
+      "type": "shell",
+      "command": "./gradlew bootRun",
+      "windows": { "command": ".\\gradlew.bat bootRun" },
+      "options": { "cwd": "${workspaceFolder}/Backend/horarios-ueb-back" },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "spring",
+        "pattern": { "regexp": "^(ERROR)\\s+(.*)$", "severity": 1, "message": 2 },
+        "background": { "activesBegin": "^.*Starting HorariosUebBackApplication.*$", "endsPattern": "^.*Started HorariosUebBackApplication.*$" }
+      },
+      "presentation": { "panel": "dedicated", "group": "servidores" }
+    },
+    {
+      "label": "Frontend: iniciar (ng serve)",
+      "type": "shell",
+      "command": "npm start",
+      "options": { "cwd": "${workspaceFolder}/Frontend/horarios-ueb" },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "angular",
+        "pattern": { "regexp": "^(ERROR)\\s+(.*)$", "severity": 1, "message": 2 },
+        "background": { "activesBegin": "^.*Building.*$", "endsPattern": "^.*(Local:|Application bundle generation complete).*$" }
+      },
+      "presentation": { "panel": "dedicated", "group": "servidores" }
+    },
+    {
+      "label": "Iniciar todo (backend + frontend)",
+      "dependsOn": ["Backend: iniciar (perfil local, H2)", "Frontend: iniciar (ng serve)"],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    },
+    {
+      "label": "Backend: pruebas",
+      "type": "shell",
+      "command": "./gradlew test",
+      "windows": { "command": ".\\gradlew.bat test" },
+      "options": { "cwd": "${workspaceFolder}/Backend/horarios-ueb-back" },
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Frontend: instalar dependencias",
+      "type": "shell",
+      "command": "npm install",
+      "options": { "cwd": "${workspaceFolder}/Frontend/horarios-ueb" },
+      "problemMatcher": []
+    }
+  ]
+}
