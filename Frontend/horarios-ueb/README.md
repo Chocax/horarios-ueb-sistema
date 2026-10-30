@@ -6,7 +6,7 @@ Aplicación Angular 21 (componentes standalone, signals, Angular CDK para arrast
 | Archivo | Se usa en | URL de la API |
 |---|---|---|
 | `environment.ts` | `npm start` (desarrollo) | `http://localhost:8080/api` |
-| `environment.production.ts` | `npm run build` (Vercel) | `https://horarios-ueb-back.onrender.com/api` |
+| `environment.production.ts` | `npm run build` (Vercel) | `https://horarios-ueb-sistema.onrender.com/api` |
 
 ```bash
 npm install
