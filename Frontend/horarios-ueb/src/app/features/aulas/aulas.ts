@@ -91,7 +91,7 @@ import { Modal } from '../../shared/modal';
         }
         <div class="modal-foot">
           <button class="btn btn-ghost" (click)="edit.set(null)">Cancelar</button>
-          <button class="btn btn-primary" (click)="guardar(e)">Guardar</button>
+          <button class="btn btn-primary" (click)="guardar(e)" [disabled]="store.ocupado()">Guardar</button>
         </div>
       </app-modal>
     }

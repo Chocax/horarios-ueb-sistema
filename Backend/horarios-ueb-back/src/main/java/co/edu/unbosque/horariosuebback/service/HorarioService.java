@@ -11,6 +11,7 @@ import co.edu.unbosque.horariosuebback.domain.reglas.Violacion;
 import co.edu.unbosque.horariosuebback.dto.Dtos.MoverSesionRequest;
 import co.edu.unbosque.horariosuebback.dto.Dtos.ObservacionDto;
 import co.edu.unbosque.horariosuebback.dto.Dtos.Respuesta;
+import co.edu.unbosque.horariosuebback.dto.Dtos.SesionDto;
 import co.edu.unbosque.horariosuebback.dto.Dtos.VersionDto;
 import co.edu.unbosque.horariosuebback.dto.Mapeo;
 import co.edu.unbosque.horariosuebback.entity.Docente;
@@ -119,9 +120,9 @@ public class HorarioService {
 
     // ------------------------------------------------------------------ ajuste en el tablero (CU-11, CU-12)
 
-    /** Mueve o reasigna una sesión: valida R1–R9 y, si pasa, guarda el cambio (RF-10). */
+    /** Mueve o reasigna una sesión: valida R1–R9 y, si pasa, guarda el cambio (RF-10). Devuelve solo la sesión (respuesta liviana). */
     @Transactional
-    public VersionDto mover(String versionId, String sesionId, MoverSesionRequest req) {
+    public SesionDto mover(String versionId, String sesionId, MoverSesionRequest req) {
         VersionHorario v = borrador(versionId);
         Sesion s = sesiones.findById(sesionId).filter(x -> x.getVersionId().equals(v.getId()))
                 .orElseThrow(() -> NegocioException.noEncontrado("La sesión"));
@@ -144,7 +145,7 @@ public class HorarioService {
         s.setAulaId(req.aulaId());
         sesiones.save(s);
         bitacora.registrar("Ajuste de sesión", det.append(" (v").append(v.getNumero()).append(')').toString());
-        return dto(v);
+        return Mapeo.sesion(s);
     }
 
     /** Ubica una sesión de un grupo pendiente en el día y hora indicados, eligiendo docente y aula válidos. */
@@ -276,6 +277,37 @@ public class HorarioService {
         pendientes.saveAll(pend.stream().map(p -> new GrupoPendiente(v.getId(), p.getGrupoId(), p.getRegla(), p.getCausa())).toList());
         bitacora.registrar("Restauración de versión", "Versión " + origen.getNumero() + " → nueva versión de trabajo " + v.getNumero());
         return dto(v);
+    }
+
+    // ------------------------------------------------------------------ administración: borrar versiones de prueba
+
+    /**
+     * Borra una versión con sus sesiones, pendientes y observaciones, como si nunca hubiera existido (la bitácora conserva el
+     * registro de la eliminación). La numeración del periodo sigue desde la versión más alta que quede.
+     */
+    @Transactional
+    public void eliminarVersion(String versionId) {
+        VersionHorario v = buscar(versionId);
+        PeriodoAcademico per = cargador.periodo(v.getPeriodoId());
+        int nSesiones = sesiones.findByVersionId(v.getId()).size();
+        versiones.delete(v);
+        versiones.flush();
+        bitacora.registrar("Eliminación de versión", "Versión " + v.getNumero() + " de " + per.getCodigo() + " (" + v.getEstado().name().toLowerCase()
+                + ", " + nSesiones + " sesiones)");
+    }
+
+    /** Borra todas las versiones del periodo; la publicada solo si se pide explícitamente. Devuelve cuántas borró. */
+    @Transactional
+    public int eliminarVersionesPeriodo(String periodoId, boolean incluirPublicada) {
+        PeriodoAcademico per = cargador.periodo(periodoId);
+        List<VersionHorario> lista = versiones.findByPeriodoIdOrderByNumeroDesc(periodoId).stream()
+                .filter(v -> incluirPublicada || v.getEstado() != EstadoVersion.PUBLICADA)
+                .toList();
+        versiones.deleteAll(lista);
+        versiones.flush();
+        bitacora.registrar("Eliminación de versiones", lista.size() + " versión(es) de " + per.getCodigo()
+                + (incluirPublicada ? " (incluida la publicada)" : " (se conservó la publicada)"));
+        return lista.size();
     }
 
     // ------------------------------------------------------------------ comité (CU-20)

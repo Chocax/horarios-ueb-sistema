@@ -31,6 +31,8 @@ class Ocupacion {
     private final Map<String, List<Integer>> docenteDia = new HashMap<>();
     /** sesiones por jornada y día (0 = lunes … 5 = sábado), para repartir la semana */
     private final Map<Jornada, int[]> porDia = new EnumMap<>(Jornada.class);
+    /** horas de clase asignadas a cada aula, para repartir la ocupación */
+    private final Map<String, Integer> usoAula = new HashMap<>();
 
     Ocupacion(Catalogo catalogo, Parametros p) {
         this.catalogo = catalogo;
@@ -44,6 +46,7 @@ class Ocupacion {
             if (s.getDocenteId() != null) docente.add(s.getDocenteId() + "|" + s.getDia() + "|" + h);
             if (s.getAulaId() != null) aula.add(s.getAulaId() + "|" + s.getDia() + "|" + h);
         }
+        if (s.getAulaId() != null) usoAula.merge(s.getAulaId(), dur, Integer::sum);
         Grupo g = catalogo.grupo(s.getGrupoId());
         Curso c = g == null ? null : catalogo.curso(g.getCursoId());
         if (g != null && c != null) {
@@ -109,6 +112,10 @@ class Ocupacion {
         int[] c = porDia.get(jornada);
         double prom = (c[0] + c[1] + c[2] + c[3] + c[4]) / 5.0;
         return (c[dia] - prom) / Math.max(prom, 4);
+    }
+
+    int horasAula(String id) {
+        return usoAula.getOrDefault(id, 0);
     }
 
     int sesionesDia(Jornada jornada, int dia) {

@@ -119,7 +119,7 @@ export const ESCALAFON = ['Instructor', 'Auxiliar', 'Asistente', 'Asociado', 'Ti
         }
         <div class="modal-foot">
           <button class="btn btn-ghost" (click)="edit.set(null)">Cancelar</button>
-          <button class="btn btn-primary" (click)="guardar(e)"><app-icon name="check" [size]="16" /> Guardar</button>
+          <button class="btn btn-primary" (click)="guardar(e)" [disabled]="store.ocupado()"><app-icon name="check" [size]="16" /> Guardar</button>
         </div>
       </app-modal>
     }

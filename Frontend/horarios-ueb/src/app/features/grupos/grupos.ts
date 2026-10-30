@@ -65,9 +65,9 @@ import { Modal } from '../../shared/modal';
                 <td>
                   <div class="row" style="gap:6px;flex-wrap:nowrap">
                     <input type="number" class="mini" #n [value]="f.grupos.length || f.sugeridos" min="1" [attr.aria-label]="'Número de grupos ' + f.curso.nombre" />
-                    <button class="btn btn-sm" (click)="aplicar(f.curso, +n.value)">Aplicar</button>
+                    <button class="btn btn-sm" (click)="aplicar(f.curso, +n.value)" [disabled]="store.ocupado()">Aplicar</button>
                     @if (f.sugeridos && f.sugeridos !== f.grupos.length) {
-                      <button class="btn btn-sm btn-ghost" (click)="aplicar(f.curso, f.sugeridos)">Usar {{ f.sugeridos }}</button>
+                      <button class="btn btn-sm btn-ghost" (click)="aplicar(f.curso, f.sugeridos)" [disabled]="store.ocupado()">Usar {{ f.sugeridos }}</button>
                     }
                   </div>
                 </td>
@@ -147,7 +147,7 @@ import { Modal } from '../../shared/modal';
         @if (error()) { <div class="errores" style="margin-top:14px">{{ error() }}</div> }
         <div class="modal-foot">
           <button class="btn btn-ghost" (click)="edit.set(null)">Cancelar</button>
-          <button class="btn btn-primary" (click)="guardar(e)">Guardar grupo</button>
+          <button class="btn btn-primary" (click)="guardar(e)" [disabled]="store.ocupado()">Guardar grupo</button>
         </div>
       </app-modal>
     }

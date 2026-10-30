@@ -92,7 +92,7 @@ import { Modal } from '../../shared/modal';
           @if (!cerrado()) {
             <div class="modal-foot">
               <button class="btn btn-ghost" (click)="recargar()">Descartar cambios</button>
-              <button class="btn btn-primary" (click)="guardar()"><app-icon name="check" [size]="16" /> Guardar parámetros</button>
+              <button class="btn btn-primary" (click)="guardar()" [disabled]="store.ocupado()"><app-icon name="check" [size]="16" /> Guardar parámetros</button>
             </div>
           }
         </div>
@@ -110,7 +110,7 @@ import { Modal } from '../../shared/modal';
         <label class="check" style="margin-top:12px"><input type="checkbox" [(ngModel)]="copiar" /> Copiar la oferta y los grupos de {{ store.periodo().codigo }}</label>
         <div class="modal-foot">
           <button class="btn btn-ghost" (click)="nuevo.set(false)">Cancelar</button>
-          <button class="btn btn-primary" (click)="crear()">Crear periodo {{ anio }}-{{ semestre }}</button>
+          <button class="btn btn-primary" (click)="crear()" [disabled]="store.ocupado()">Crear periodo {{ anio }}-{{ semestre }}</button>
         </div>
       </app-modal>
     }

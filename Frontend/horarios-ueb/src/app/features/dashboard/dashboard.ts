@@ -22,7 +22,7 @@ import { creditosPorSemestre } from '../../core/plan';
         </div>
         <div class="row">
           <a class="btn btn-ghost" routerLink="/tablero"><app-icon name="board" [size]="16" /> Ir al tablero</a>
-          <button class="btn btn-primary" (click)="generar()" [disabled]="store.periodo().estado === 'CERRADO'">
+          <button class="btn btn-primary" (click)="generar()" [disabled]="store.ocupado() || (store.periodo().estado === 'CERRADO')">
             <app-icon name="wand" [size]="16" /> Generar propuesta
           </button>
         </div>

@@ -16,6 +16,7 @@ export const NAV: ItemNav[] = [
   { ruta: '/mi-horario', texto: 'Mi horario', icono: 'calendar', roles: ['DOCENTE'] },
   { ruta: '/mi-disponibilidad', texto: 'Mi disponibilidad', icono: 'clock', roles: ['DOCENTE'] },
   { ruta: '/usuarios', texto: 'Usuarios y roles', icono: 'shield', roles: ['ADMINISTRADOR'] },
+  { ruta: '/propuestas', texto: 'Propuestas de horario', icono: 'history', roles: ['ADMINISTRADOR'] },
 
   { ruta: '/periodos', texto: 'Periodos y parámetros', icono: 'settings', grupo: 'Planeación', roles: ['COORDINADOR', 'ADMINISTRADOR'] },
   { ruta: '/docentes', texto: 'Docentes', icono: 'users', grupo: 'Planeación', roles: ['COORDINADOR'] },

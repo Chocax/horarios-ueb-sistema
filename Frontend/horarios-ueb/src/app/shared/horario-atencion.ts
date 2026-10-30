@@ -71,7 +71,7 @@ interface Fila {
                   <input type="text" [(ngModel)]="f.lugar" [placeholder]="f.modo === 'ACORDAR' ? 'Correo o indicación' : 'Sala, bloque o enlace'" />
                 </div>
               }
-              <button type="button" class="btn btn-sm btn-primary" (click)="guardar(f)"><app-icon name="check" [size]="14" /> Guardar</button>
+              <button type="button" class="btn btn-sm btn-primary" (click)="guardar(f)" [disabled]="store.ocupado()"><app-icon name="check" [size]="14" /> Guardar</button>
             </div>
             @if (aviso(f); as a) { <div class="aviso warn mini"><app-icon name="alert" [size]="14" /><span>{{ a }}</span></div> }
             @if (errores()[f.cursoId]; as errs) {

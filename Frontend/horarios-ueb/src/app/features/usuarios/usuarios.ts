@@ -73,7 +73,7 @@ import { Modal } from '../../shared/modal';
         @if (errores().length) { <div class="errores" style="margin-top:14px"><ul>@for (x of errores(); track x) {<li>{{ x }}</li>}</ul></div> }
         <div class="modal-foot">
           <button class="btn btn-ghost" (click)="edit.set(null)">Cancelar</button>
-          <button class="btn btn-primary" (click)="guardar(e)">Guardar</button>
+          <button class="btn btn-primary" (click)="guardar(e)" [disabled]="store.ocupado()">Guardar</button>
         </div>
       </app-modal>
     }

@@ -4,11 +4,13 @@ import co.edu.unbosque.horariosuebback.dto.Dtos.MoverSesionRequest;
 import co.edu.unbosque.horariosuebback.dto.Dtos.ObservacionDto;
 import co.edu.unbosque.horariosuebback.dto.Dtos.ObservacionRequest;
 import co.edu.unbosque.horariosuebback.dto.Dtos.Respuesta;
+import co.edu.unbosque.horariosuebback.dto.Dtos.SesionDto;
 import co.edu.unbosque.horariosuebback.dto.Dtos.UbicarRequest;
 import co.edu.unbosque.horariosuebback.dto.Dtos.VersionDto;
 import co.edu.unbosque.horariosuebback.service.HorarioService;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +38,8 @@ public class VersionController {
 
     @PatchMapping("/{id}/sesiones/{sesionId}")
     @PreAuthorize("hasRole('COORDINADOR')")
-    public Respuesta<VersionDto> mover(@PathVariable String id, @PathVariable String sesionId, @RequestBody MoverSesionRequest req) {
+    public Respuesta<SesionDto> mover(@PathVariable String id, @PathVariable String sesionId,
+                                                                               @RequestBody MoverSesionRequest req) {
         return Respuesta.ok(horario.mover(id, sesionId, req));
     }
 
@@ -62,6 +65,14 @@ public class VersionController {
     @PreAuthorize("hasRole('COORDINADOR')")
     public Respuesta<VersionDto> restaurar(@PathVariable String id) {
         return Respuesta.ok(horario.restaurar(id));
+    }
+
+    /** Solo el administrador: borra una versión de prueba como si nunca hubiera existido. */
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
+    public Respuesta<Void> eliminar(@PathVariable String id) {
+        horario.eliminarVersion(id);
+        return Respuesta.ok("Versión eliminada.", null);
     }
 
     @PostMapping("/{id}/observaciones")
