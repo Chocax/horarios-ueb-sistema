@@ -140,7 +140,7 @@ No hace falta crear tablas: el backend las crea y carga los datos la primera vez
    (Docker, plan Free). Complete las variables:
    - `DB_URL`, `DB_USER`, `DB_PASSWORD`: los de Aiven.
    - `JWT_SECRET` se genera solo; `CORS_ORIGINS` ya trae `https://horarios-ueb-sistema.vercel.app`.
-4. **Apply**. La primera compilación tarda 5–10 min. Pruebe `https://horarios-ueb-back.onrender.com/api/salud`:
+4. **Apply**. La primera compilación tarda 5–10 min. Pruebe `https://horarios-ueb-sistema.onrender.com/api/salud`:
    debe responder `{"estado":"ok"}`.
 
 > [!IMPORTANT]
@@ -163,7 +163,7 @@ de sesión lo despierta y muestra «Conectando con el servidor…».
 ### 4. Mantenerlo despierto (opcional)
 
 En [cron-job.org](https://cron-job.org) cree una tarea gratuita que llame cada 10 minutos a
-`https://horarios-ueb-back.onrender.com/api/salud`. Mantiene despiertos el backend y la base de datos (Render da
+`https://horarios-ueb-sistema.onrender.com/api/salud`. Mantiene despiertos el backend y la base de datos (Render da
 750 horas gratis al mes, suficientes para un servicio encendido todo el mes).
 
 Cada `git push` a `main` vuelve a desplegar Render y Vercel automáticamente.

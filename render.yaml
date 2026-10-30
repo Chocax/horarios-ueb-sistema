@@ -2,7 +2,7 @@
 # En Render: New → Blueprint → elija este repositorio. Las variables con sync: false se llenan en el panel.
 services:
   - type: web
-    name: horarios-ueb-back
+    name: horarios-ueb-sistema
     runtime: docker
     plan: free
     region: virginia
