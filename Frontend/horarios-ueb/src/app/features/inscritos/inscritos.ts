@@ -68,7 +68,7 @@ import { Modal } from '../../shared/modal';
         <p>Se eliminarán sus <strong>{{ sesionesDe(g) }} sesión(es)</strong> de la versión de trabajo y de la publicada, liberando el docente y el aula en esos bloques. La acción queda en la bitácora.</p>
         <div class="modal-foot">
           <button class="btn btn-ghost" (click)="confirmar.set(null)">Cancelar</button>
-          <button class="btn btn-danger" (click)="cerrar(g)">Cerrar grupo</button>
+          <button class="btn btn-danger" (click)="cerrar(g)" [disabled]="store.ocupado()">Cerrar grupo</button>
         </div>
       </app-modal>
     }

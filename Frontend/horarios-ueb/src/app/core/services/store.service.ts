@@ -36,6 +36,8 @@ export class StoreService {
   /** true cuando ya se cargó el estado del servidor en esta sesión. */
   readonly listo = signal(false);
   readonly cargando = signal(false);
+  /** true mientras haya alguna petición al servidor en curso. */
+  readonly ocupado = computed(() => this.api.pendientes() > 0);
   readonly bitacora = signal<RegistroBitacora[]>([]);
 
   // ------------------------------------------------------------------ selectores
@@ -224,7 +226,10 @@ export class StoreService {
     return r;
   }
 
-  /** Mueve o reasigna una sesión. Valida R1–R9 en el navegador para responder al instante y el servidor lo confirma (RF-10). */
+  /**
+   * Mueve o reasigna una sesión (RF-10). Valida R1–R9 en el navegador y, si pasa, el cambio se ve al instante; el servidor lo
+   * vuelve a validar y lo guarda. Si lo rechaza, la sesión vuelve a su lugar.
+   */
   async moverSesion(versionId: string, sesionId: string, cambios: { dia?: Dia; inicio?: number; docenteId?: string | null; aulaId?: string | null }): Promise<Resultado> {
     const v = this.version(versionId);
     if (!v || v.estado !== 'BORRADOR') return { ok: false, mensaje: 'Solo se puede ajustar la versión de trabajo (borrador).' };
@@ -236,10 +241,12 @@ export class StoreService {
       v.sesiones, this.parametrosDe(v), this.catalogo(),
     );
     if (viol.length) return { ok: false, mensaje: 'Movimiento rechazado', violaciones: viol };
-    const r = await this.api.patch<VersionHorario>(`/versiones/${versionId}/sesiones/${sesionId}`, {
+    this.ponerSesion(versionId, nueva);
+    const r = await this.api.patch<Sesion>(`/versiones/${versionId}/sesiones/${sesionId}`, {
       dia: nueva.dia, inicio: nueva.inicio, docenteId: nueva.docenteId, aulaId: nueva.aulaId,
     });
-    if (r.ok && r.valor) this.reemplazar('versiones', r.valor);
+    if (r.ok && r.valor) this.ponerSesion(versionId, r.valor);
+    else this.ponerSesion(versionId, s);
     return r as Resultado;
   }
 
@@ -321,6 +328,19 @@ export class StoreService {
     return r;
   }
 
+  // ------------------------------------------------------------------ administración: borrar versiones de prueba
+  async eliminarVersion(versionId: string): Promise<Resultado> {
+    const r = await this.api.delete(`/versiones/${versionId}`);
+    if (r.ok) await this.cargar();
+    return r as Resultado;
+  }
+
+  async eliminarVersionesPeriodo(incluirPublicada: boolean): Promise<Resultado> {
+    const r = await this.api.delete(`/periodos/${this.periodo().id}/versiones?incluirPublicada=${incluirPublicada}`);
+    if (r.ok) await this.cargar();
+    return r as Resultado;
+  }
+
   // ------------------------------------------------------------------ comité (CU-20)
   async registrarObservacion(versionId: string, concepto: Observacion['concepto'], texto: string): Promise<Resultado> {
     if (!texto.trim()) return { ok: false, mensaje: 'Escriba la observación.' };
@@ -366,6 +386,13 @@ export class StoreService {
     this.estado.update((e) => ({
       ...e,
       versiones: [...e.versiones.map((x) => (x.periodoId === v.periodoId && x.estado === 'BORRADOR' ? { ...x, estado: 'ARCHIVADA' as const } : x)), v],
+    }));
+  }
+
+  private ponerSesion(versionId: string, s: Sesion) {
+    this.estado.update((e) => ({
+      ...e,
+      versiones: e.versiones.map((v) => (v.id === versionId ? { ...v, sesiones: v.sesiones.map((x) => (x.id === s.id ? s : x)) } : v)),
     }));
   }
 

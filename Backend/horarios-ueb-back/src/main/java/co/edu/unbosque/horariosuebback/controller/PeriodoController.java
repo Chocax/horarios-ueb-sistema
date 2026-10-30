@@ -17,6 +17,7 @@ import co.edu.unbosque.horariosuebback.service.HorarioService;
 import co.edu.unbosque.horariosuebback.service.PeriodoService;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -80,6 +81,14 @@ public class PeriodoController {
     public Respuesta<Void> importar(@PathVariable String id, @Valid @RequestBody ImportacionRequest req) {
         catalogo.importar(id, req);
         return Respuesta.ok("Importación aplicada.", null);
+    }
+
+    /** Solo el administrador: borra todas las versiones del periodo (la publicada solo con incluirPublicada=true). */
+    @DeleteMapping("/periodos/{id}/versiones")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
+    public Respuesta<Void> eliminarVersiones(@PathVariable String id, @RequestParam(name = "incluirPublicada", defaultValue = "false") boolean incluirPublicada) {
+        int n = horario.eliminarVersionesPeriodo(id, incluirPublicada);
+        return Respuesta.ok(n + " versión(es) eliminada(s).", null);
     }
 
     @PostMapping("/periodos/{id}/generar")

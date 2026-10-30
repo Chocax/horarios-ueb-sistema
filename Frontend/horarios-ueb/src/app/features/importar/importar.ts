@@ -68,7 +68,7 @@ import { Icon } from '../../shared/icon';
               @if (r.filas > 8) { <p class="caption" style="margin-top:6px">Vista previa de las primeras 8 filas.</p> }
               <div class="modal-foot">
                 <button class="btn btn-ghost" (click)="limpiar()">Cancelar</button>
-                <button class="btn btn-primary" (click)="confirmar(r)"><app-icon name="check" [size]="16" /> Confirmar importación</button>
+                <button class="btn btn-primary" (click)="confirmar(r)" [disabled]="store.ocupado()"><app-icon name="check" [size]="16" /> Confirmar importación</button>
               </div>
             } @else {
               <div class="aviso" style="margin-top:16px;background:#e3efd9">
@@ -92,7 +92,7 @@ import { Icon } from '../../shared/icon';
   ],
 })
 export class Importar {
-  private readonly store = inject(StoreService);
+  protected readonly store = inject(StoreService);
   private readonly toast = inject(ToastService);
   protected readonly tipos: { valor: TipoImportacion; nombre: string }[] = [
     { valor: 'docentes', nombre: 'Docentes' },

@@ -45,6 +45,10 @@ public class GeneradorVoraz implements GeneradorHorario {
     private static final int PESO_PATRON = 12;
     /** Peso del desbalance de la semana por cada sesión. */
     private static final double PESO_BALANCE = 8;
+    /** Un grupo diurno solo va el sábado si entre semana no cabe (más caro que cruzarse con otro curso del semestre). */
+    private static final double PESO_SABADO_DIURNO = 80;
+    /** Sábado para un grupo nocturno: es parte normal de la jornada nocturna. */
+    private static final double PESO_SABADO_NOCTURNO = 3;
 
     private final ValidadorReglas validador;
 
@@ -201,6 +205,7 @@ public class GeneradorVoraz implements GeneradorHorario {
         int nivel = e.catalogo().curso(g.getCursoId()).getNivel();
         List<Candidato> candidatos = candidatos(g, n, nivel, oc, p);
         candidatos.sort(Comparator.comparingDouble(Candidato::costo));
+        aulas = repartidas(aulas, e.catalogo().curso(g.getCursoId()), oc);
         for (Candidato c : candidatos) {
             boolean disponible = true;
             for (int[] f : c.franjas()) {
@@ -253,7 +258,7 @@ public class GeneradorVoraz implements GeneradorHorario {
             boolean conSab = dias[dias.length - 1] == 5;
             int consecutivos = 0;
             for (int i = 1; i < dias.length; i++) if (dias[i] - dias[i - 1] == 1 && dias[i] != 5) consecutivos++;
-            double base = consecutivos * 6 + (conSab ? (diurna ? 12 : 3) : 0) + costoPatron(dias);
+            double base = consecutivos * 6 + (conSab ? (diurna ? PESO_SABADO_DIURNO : PESO_SABADO_NOCTURNO) : 0) + costoPatron(dias);
             boolean entreSemana = dias[0] != 5;
             List<Integer> hs = entreSemana ? IntStream.of(horasLV).boxed().toList() : java.util.Collections.singletonList(null);
             List<Integer> hsSab = conSab ? horasSab : java.util.Collections.singletonList(null);
@@ -308,14 +313,19 @@ public class GeneradorVoraz implements GeneradorHorario {
 
     /** Último recurso: ubica sesión por sesión en cualquier día y hora libre (sin exigir patrón). */
     private List<Sesion> sesionPorSesion(Grupo g, Docente d, int n, List<Aula> aulas, List<Sesion> ya, Entrada e, Ocupacion oc) {
-        for (boolean evitarCruces : new boolean[]{true, false}) {
-            List<Sesion> r = sesionPorSesionPasada(g, d, n, aulas, ya, e, oc, evitarCruces);
+        aulas = repartidas(aulas, e.catalogo().curso(g.getCursoId()), oc);
+        boolean diurna = g.getJornada() == Jornada.DIURNA;
+        // pasadas de más a menos exigentes; el sábado diurno queda para la última
+        boolean[][] pasadas = {{true, diurna}, {false, diurna}, {false, false}};
+        for (boolean[] pasada : pasadas) {
+            List<Sesion> r = sesionPorSesionPasada(g, d, n, aulas, ya, e, oc, pasada[0], pasada[1]);
             if (r != null) return r;
         }
         return null;
     }
 
-    private List<Sesion> sesionPorSesionPasada(Grupo g, Docente d, int n, List<Aula> aulas, List<Sesion> ya, Entrada e, Ocupacion oc, boolean evitarCruces) {
+    private List<Sesion> sesionPorSesionPasada(Grupo g, Docente d, int n, List<Aula> aulas, List<Sesion> ya, Entrada e, Ocupacion oc,
+                                               boolean evitarCruces, boolean sinSabado) {
         Parametros p = e.parametros();
         int nivel = e.catalogo().curso(g.getCursoId()).getNivel();
         int[] horasLV = g.getJornada() == Jornada.DIURNA ? new int[]{7, 9, 11, 14, 16, 18} : new int[]{18, 20, 14, 16};
@@ -328,7 +338,7 @@ public class GeneradorVoraz implements GeneradorHorario {
             Sesion ubicada = null;
             Set<Integer> usados = tent.stream().map(Sesion::getDia).collect(Collectors.toCollection(HashSet::new));
             for (int dia : diasOrden) {
-                if (usados.contains(dia)) continue;
+                if (usados.contains(dia) || (sinSabado && dia == 5)) continue;
                 for (int h : dia == 5 ? new int[]{7, 9, 11} : horasLV) {
                     if (!disponible(d, dia, h, p.duracionSesion()) || oc.docenteOcupado(d.getId(), dia, h)) continue;
                     if (evitarCruces && oc.efectoNivel(nivel, g.getJornada(), g.getCursoId(), dia, h).cruza()) continue;
@@ -351,6 +361,20 @@ public class GeneradorVoraz implements GeneradorHorario {
     }
 
     // ------------------------------------------------------------------ apoyo
+
+    /**
+     * Orden de las aulas aptas para un grupo: primero las que no tienen características que el curso no necesita (B5); entre
+     * ellas, las menos usadas hasta ahora (para repartir la ocupación) y, a uso parecido, la de mejor ajuste de capacidad.
+     */
+    private static List<Aula> repartidas(List<Aula> aulas, Curso c, Ocupacion oc) {
+        Set<Caracteristica> req = c.getCaracteristicasRequeridas();
+        return aulas.stream()
+                .sorted(Comparator.comparingLong((Aula a) -> a.getCaracteristicas().stream().filter(x -> !req.contains(x)).count())
+                        .thenComparingInt(a -> oc.horasAula(a.getId()) / 4)
+                        .thenComparingInt(Aula::getCapacidad)
+                        .thenComparing(Aula::getCodigo))
+                .toList();
+    }
 
     static int sesionesDe(Grupo g, Catalogo cat, Parametros p) {
         return Math.max(p.sesionesMinimas(), cat.curso(g.getCursoId()).getSesionesSemanales());

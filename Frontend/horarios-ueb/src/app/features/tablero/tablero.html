@@ -19,7 +19,7 @@
         <app-icon name="gauge" [size]="16" /> Restricciones blandas
         <span class="pill" [class.yellow]="blandas().length">{{ blandas().length }}</span>
       </button>
-      <button class="btn btn-primary" (click)="generar()" [disabled]="store.periodo().estado === 'CERRADO'">
+      <button class="btn btn-primary" (click)="generar()" [disabled]="store.ocupado() || (store.periodo().estado === 'CERRADO')">
         <app-icon name="wand" [size]="16" /> {{ vt() ? 'Regenerar propuesta' : 'Generar propuesta' }}
       </button>
     </div>
@@ -30,7 +30,7 @@
       <app-icon name="board" [size]="34" />
       <h3>Aún no hay propuesta para {{ store.periodo().codigo }}</h3>
       <p>El generador asigna docente, aula y bloques a los {{ store.gruposAbiertos().length }} grupos abiertos validando R1–R9.<br />Los grupos que no se puedan ubicar quedan pendientes con su causa.</p>
-      <button class="btn btn-primary" style="margin-top:14px" (click)="generar()" [disabled]="store.periodo().estado === 'CERRADO'"><app-icon name="wand" [size]="16" /> Generar propuesta inicial</button>
+      <button class="btn btn-primary" style="margin-top:14px" (click)="generar()" [disabled]="store.ocupado() || (store.periodo().estado === 'CERRADO')"><app-icon name="wand" [size]="16" /> Generar propuesta inicial</button>
     </div>
   } @else {
     @if (!editable()) {
@@ -120,7 +120,7 @@
                 <p class="caption">{{ x.causa }}</p>
                 <div class="row between">
                   <span class="caption">{{ ubicadas(x) }}/{{ requeridas(x) }} sesiones ubicadas</span>
-                  @if (editable()) { <button class="btn btn-sm" (click)="reintentar(x)"><app-icon name="refresh" [size]="13" /> Reintentar</button> }
+                  @if (editable()) { <button class="btn btn-sm" (click)="reintentar(x)" [disabled]="store.ocupado()"><app-icon name="refresh" [size]="13" /> Reintentar</button> }
                 </div>
                 <div *cdkDragPlaceholder class="pend-ph"></div>
               </div>
@@ -268,7 +268,7 @@
             </div>
           </fieldset>
           @if (editable()) {
-            <button class="btn btn-primary" style="width:100%;margin-top:14px" (click)="aplicarDetalle()"><app-icon name="check" [size]="16" /> Validar y aplicar</button>
+            <button class="btn btn-primary" style="width:100%;margin-top:14px" (click)="aplicarDetalle()" [disabled]="store.ocupado()"><app-icon name="check" [size]="16" /> Validar y aplicar</button>
             <p class="caption" style="margin-top:8px">Cada cambio se valida contra R1–R9 antes de guardarse.</p>
           }
         </aside>

@@ -58,7 +58,7 @@ import { ScheduleGrid } from '../../shared/schedule-grid';
                 <label class="check"><input type="radio" name="c" value="CON_AJUSTES" [(ngModel)]="concepto" /> Requiere ajustes</label>
                 <div class="field"><label>Observación</label><textarea rows="5" [(ngModel)]="texto" placeholder="Ej.: En 3.er semestre Programación II y Estructuras de datos quedaron el mismo día; sugerimos separarlas."></textarea></div>
                 @if (error()) { <div class="errores">{{ error() }}</div> }
-                <button class="btn btn-primary" (click)="registrar()"><app-icon name="send" [size]="16" /> Enviar al coordinador</button>
+                <button class="btn btn-primary" (click)="registrar()" [disabled]="store.ocupado()"><app-icon name="send" [size]="16" /> Enviar al coordinador</button>
               </div>
             </div>
             <div class="card">

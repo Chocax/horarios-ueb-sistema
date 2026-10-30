@@ -42,9 +42,9 @@ import { Modal } from '../../shared/modal';
             </div>
             <div class="row" style="gap:6px">
               @if (v.estado === 'BORRADOR') {
-                <button class="btn btn-primary btn-sm" (click)="publicar(v)"><app-icon name="send" [size]="14" /> Publicar</button>
+                <button class="btn btn-primary btn-sm" (click)="publicar(v)" [disabled]="store.ocupado()"><app-icon name="send" [size]="14" /> Publicar</button>
               } @else {
-                <button class="btn btn-sm" (click)="restaurar(v)" [disabled]="store.periodo().estado === 'CERRADO'"><app-icon name="undo" [size]="14" /> Restaurar como borrador</button>
+                <button class="btn btn-sm" (click)="restaurar(v)" [disabled]="store.ocupado() || (store.periodo().estado === 'CERRADO')"><app-icon name="undo" [size]="14" /> Restaurar como borrador</button>
               }
               <button class="btn btn-sm btn-ghost" (click)="ver(v)"><app-icon name="eye" [size]="14" /> Ver</button>
             </div>
@@ -83,7 +83,7 @@ import { Modal } from '../../shared/modal';
         }
         <div class="modal-foot">
           <button class="btn btn-ghost" (click)="confirmar.set(null)">Cancelar</button>
-          <button class="btn btn-primary" (click)="hacerPublicar(v)"><app-icon name="send" [size]="16" /> Publicar</button>
+          <button class="btn btn-primary" (click)="hacerPublicar(v)" [disabled]="store.ocupado()"><app-icon name="send" [size]="16" /> Publicar</button>
         </div>
       </app-modal>
     }

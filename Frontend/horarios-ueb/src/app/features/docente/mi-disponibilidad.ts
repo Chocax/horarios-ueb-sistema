@@ -21,7 +21,7 @@ import { Icon } from '../../shared/icon';
           <p class="serif sub">Marque las horas en que puede dictar clase. El generador y el tablero no lo ubicarán fuera de ellas (R6).</p>
         </div>
         @if (docente()) {
-          <button class="btn btn-primary" (click)="guardar()" [disabled]="!cambios()"><app-icon name="check" [size]="16" /> Guardar disponibilidad</button>
+          <button class="btn btn-primary" (click)="guardar()" [disabled]="store.ocupado() || (!cambios())"><app-icon name="check" [size]="16" /> Guardar disponibilidad</button>
         }
       </div>
       @if (docente(); as d) {

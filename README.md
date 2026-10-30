@@ -42,7 +42,7 @@ flowchart LR
 | `entity` (+ `enums`) | Entidades JPA con Lombok (solo atributos) |
 | `repository` | Repositorios Spring Data JPA |
 | `domain.reglas` | Reglas duras R1–R9 (patrón Specification) y `ValidadorReglas` |
-| `domain.generador` | `GeneradorHorario` (interfaz) y `GeneradorVoraz`: patrones L-X, M-J, X-V, L-X-V… con balance de la semana |
+| `domain.generador` | `GeneradorHorario` (interfaz), `GeneradorVoraz` (el algoritmo voraz: patrones L-X, M-J, X-V, L-X-V…, semana balanceada, sábado diurno solo como último recurso y aulas repartidas) y `Ocupacion` (índices de ocupación que usa) |
 | `service` | Lógica de negocio: periodos, catálogo, grupos, horario y versiones, atención, usuarios, bitácora |
 | `controller` | API REST bajo `/api` con permisos por rol (`@PreAuthorize`) |
 | `security`, `config` | JWT HS256, BCrypt, CORS, cabeceras, freno a fuerza bruta |
@@ -67,7 +67,7 @@ Todos comparten la contraseña inicial definida por el equipo (cada uno la cambi
 |---|---|
 | Coordinación de horarios | `coordinacion@unibosque.com` |
 | Comité | `comite.software@unibosque.com` · `comite.ciencias@unibosque.com` |
-| Docentes | `gneuta@unibosque.com` · `slopez@unibosque.com` · `cvanegas@unibosque.com` · `eguillen@unibosque.com` |
+| Docentes | Todos los docentes, con su correo institucional (p. ej. `gneuta@unibosque.com`, `slopez@unibosque.com`); la lista está en *Usuarios y roles* |
 | Administración | `admin@unibosque.com` |
 
 > [!WARNING]

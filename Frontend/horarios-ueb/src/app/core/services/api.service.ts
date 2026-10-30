@@ -1,6 +1,6 @@
 // Cliente de la API REST del backend (Spring Boot). Convierte toda respuesta en un Resultado y nunca lanza.
 import { HttpClient, HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { firstValueFrom, timeout } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -31,6 +31,8 @@ export class ApiService {
   private readonly http = inject(HttpClient);
   private readonly sesion = inject(SessionService);
   private readonly router = inject(Router);
+  /** Peticiones en curso (para mostrar que el sistema está procesando). */
+  readonly pendientes = signal(0);
 
   get<T>(ruta: string) {
     return this.pedir<T>('GET', ruta);
@@ -59,6 +61,7 @@ export class ApiService {
   }
 
   private async pedir<T>(metodo: string, ruta: string, cuerpo?: unknown): Promise<Resultado<T>> {
+    this.pendientes.update((n) => n + 1);
     try {
       const r = await firstValueFrom(this.http.request<unknown>(metodo, `${API_URL}${ruta}`, { body: cuerpo }).pipe(timeout(90_000)));
       // las operaciones responden {ok, mensaje, valor}; las consultas devuelven el dato directamente
@@ -80,6 +83,8 @@ export class ApiService {
         errores: cuerpoError.errores,
         violaciones: cuerpoError.violaciones,
       };
+    } finally {
+      this.pendientes.update((n) => Math.max(0, n - 1));
     }
   }
 }

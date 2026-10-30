@@ -30,6 +30,7 @@ export const routes: Routes = [
       { path: 'revision', canActivate: [conRol('COMITE')], title: 'Revisión · Horarios UEB', loadComponent: () => import('./features/revision/revision').then((m) => m.Revision) },
       { path: 'mi-horario', canActivate: [conRol('DOCENTE')], title: 'Mi horario · Horarios UEB', loadComponent: () => import('./features/docente/mi-horario').then((m) => m.MiHorario) },
       { path: 'mi-disponibilidad', canActivate: [conRol('DOCENTE')], title: 'Mi disponibilidad · Horarios UEB', loadComponent: () => import('./features/docente/mi-disponibilidad').then((m) => m.MiDisponibilidad) },
+      { path: 'propuestas', canActivate: [conRol('ADMINISTRADOR')], title: 'Propuestas · Horarios UEB', loadComponent: () => import('./features/admin/propuestas').then((m) => m.Propuestas) },
       { path: 'mi-cuenta', title: 'Mi cuenta · Horarios UEB', loadComponent: () => import('./features/cuenta/mi-cuenta').then((m) => m.MiCuenta) },
     ],
   },
