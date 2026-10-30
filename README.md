@@ -139,7 +139,7 @@ No hace falta crear tablas: el backend las crea y carga los datos la primera vez
 3. **New → Blueprint** → elija el repositorio. Render lee `render.yaml` y propone el servicio `horarios-ueb-back`
    (Docker, plan Free). Complete las variables:
    - `DB_URL`, `DB_USER`, `DB_PASSWORD`: los de Aiven.
-   - `JWT_SECRET` se genera solo; `CORS_ORIGINS` ya trae `https://horarios-ueb.vercel.app`.
+   - `JWT_SECRET` se genera solo; `CORS_ORIGINS` ya trae `https://horarios-ueb-sistema.vercel.app`.
 4. **Apply**. La primera compilación tarda 5–10 min. Pruebe `https://horarios-ueb-back.onrender.com/api/salud`:
    debe responder `{"estado":"ok"}`.
 
@@ -154,10 +154,11 @@ de sesión lo despierta y muestra «Conectando con el servidor…».
 ### 3. Front en Vercel
 
 1. En [vercel.com](https://vercel.com): **Add New → Project** → importe el repositorio.
-2. **Root Directory:** `Frontend/horarios-ueb` (Vercel detecta Angular y usa `vercel.json`).
-3. **Deploy**. Si quiere conservar `horarios-ueb.vercel.app`, en el proyecto anterior del prototipo vaya a
-   *Settings → Domains*, quite el dominio y agréguelo al proyecto nuevo. Si la URL final es otra, póngala en la
-   variable `CORS_ORIGINS` de Render (separe varias con comas).
+2. **Project Name:** `horarios-ueb-sistema` · **Root Directory:** `Frontend/horarios-ueb` (Vercel detecta Angular y usa `vercel.json`).
+3. **Deploy**. Luego **Settings → Environments → Production → Branch Tracking:** `main`. Los pushes a `develop`
+   generan despliegues de vista previa con otra URL.
+4. La URL de producción es `https://horarios-ueb-sistema.vercel.app`. Si cambia, póngala en la variable
+   `CORS_ORIGINS` de Render (separe varias con comas).
 
 ### 4. Mantenerlo despierto (opcional)
 
