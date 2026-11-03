@@ -137,7 +137,7 @@ export class Tablero {
           .join(' · ');
         return {
           id: g.id,
-          color: this.colores().get(g.id) ?? '#eee',
+          color: this.colores().get(g.id) ?? 'var(--curso-9)',
           titulo: `${g.codigo} · ${g.jornada === 'DIURNA' ? 'diurna' : 'nocturna'}`,
           detalle: ses.length ? `${dias}${doc ? ' — ' + doc : ''}` : 'Pendiente: sin sesiones ubicadas',
           curso: g.cursoId,

@@ -4,12 +4,13 @@ import { SessionService } from '../core/services/session.service';
 import { StoreService } from '../core/services/store.service';
 import { ToastService } from '../core/services/toast.service';
 import { nombreRol } from '../core/util';
+import { BotonTema } from '../shared/boton-tema';
 import { Icon } from '../shared/icon';
 import { NAV } from './nav';
 
 @Component({
   selector: 'app-shell',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, Icon],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, Icon, BotonTema],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (menu()) { <div class="velo" (click)="menu.set(false)"></div> }
@@ -61,6 +62,7 @@ import { NAV } from './nav';
         </div>
         <div class="spacer"></div>
         <div class="usuario">
+          <app-boton-tema />
           <a class="avatar" routerLink="/mi-cuenta" title="Mi cuenta">{{ iniciales() }}</a>
           <div class="txt">
             <strong>{{ sesion.actual()?.nombre }}</strong>
@@ -77,7 +79,7 @@ import { NAV } from './nav';
   styles: [
     `
       :host { display: grid; grid-template-columns: 248px 1fr; min-height: 100vh; }
-      .side { position: sticky; top: 0; height: 100vh; background: #fbfbfa; border-right: 1px solid var(--hairline);
+      .side { position: sticky; top: 0; height: 100vh; background: var(--surface-2); border-right: 1px solid var(--hairline);
         display: flex; flex-direction: column; padding: 18px 12px; gap: 14px; overflow-y: auto; }
       .marca { display: flex; gap: 10px; align-items: center; padding: 4px 8px 10px; }
       .marca strong { display: block; font-size: 15px; letter-spacing: -0.2px; }
@@ -86,16 +88,16 @@ import { NAV } from './nav';
       .grupo { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--ink-40); padding: 14px 10px 6px; }
       .item { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 8px; color: var(--ink-54); font-weight: 500;
         transition: background 200ms ease, color 200ms ease; }
-      .item:hover { background: rgba(0,0,0,0.04); color: var(--ink-95); }
+      .item:hover { background: var(--surface-hover); color: var(--ink-95); }
       .item.on { background: var(--color-sky-tint); color: var(--color-notion-blue); }
       .pie { padding: 8px; border-top: 1px solid var(--hairline); }
       .main { min-width: 0; display: flex; flex-direction: column; }
       .top { position: sticky; top: 0; z-index: 20; height: 60px; display: flex; align-items: center; gap: 16px; padding: 0 28px;
-        background: rgba(246,245,244,0.92); backdrop-filter: blur(8px); box-shadow: var(--shadow-nav); border-bottom: 1px solid var(--hairline); }
+        background: var(--header-bg); backdrop-filter: blur(8px); box-shadow: var(--shadow-nav); border-bottom: 1px solid var(--hairline); }
       .top select { padding: 5px 8px; }
       .usuario { display: flex; align-items: center; gap: 10px; }
       .usuario .txt { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; line-height: 1.2; }
-      .avatar { color: inherit; text-decoration: none; width: 34px; height: 34px; border-radius: 99px; border: 2px solid var(--color-signal-blue); background: #fff; display: inline-flex;
+      .avatar { color: inherit; text-decoration: none; width: 34px; height: 34px; border-radius: 99px; border: 2px solid var(--color-signal-blue); background: var(--surface); display: inline-flex;
         align-items: center; justify-content: center; font-weight: 600; font-size: 12px; }
       main { flex: 1; min-width: 0; }
       .hamburguesa, .velo { display: none; }
@@ -106,7 +108,7 @@ import { NAV } from './nav';
         .side { position: fixed; left: 0; top: 0; bottom: 0; width: 272px; z-index: 60; transform: translateX(-100%);
           transition: transform 220ms ease; box-shadow: var(--shadow-mockup); }
         .side.abierto { transform: none; }
-        .velo { display: block; position: fixed; inset: 0; background: rgba(15,15,15,.32); z-index: 55; }
+        .velo { display: block; position: fixed; inset: 0; background: var(--overlay); z-index: 55; }
         .top { height: auto; min-height: 56px; padding: 8px 12px; gap: 8px; flex-wrap: wrap; }
         .top .spacer { display: none; }
         .periodo { flex: 1; min-width: 0; flex-wrap: nowrap !important; overflow-x: auto; scrollbar-width: none; }
@@ -115,7 +117,12 @@ import { NAV } from './nav';
         .periodo .caption { display: none; }
         .usuario .txt { display: none; }
       }
-      @media (max-width: 520px) {
+      /* celular: arriba menú y acciones; abajo el periodo con sus estados, a todo el ancho */
+      @media (max-width: 640px) {
+        .top { row-gap: 6px; padding: 8px 12px 10px; }
+        .usuario { margin-left: auto; gap: 6px; }
+        .periodo { order: 3; flex: 1 1 100%; }
+        .periodo select { max-width: 170px; }
         .periodo .pill { font-size: 11px; padding: 2px 8px; }
       }
     `,

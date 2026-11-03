@@ -4,11 +4,18 @@
 .semana {
   display: grid;
   grid-template-columns: 56px repeat(6, minmax(120px, 1fr));
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--hairline);
   border-radius: var(--radius-cards);
   overflow: hidden;
   min-width: 860px;
+}
+/* celular: columnas más angostas para que quepan más días antes de deslizar */
+@media (max-width: 640px) {
+  .semana {
+    grid-template-columns: 44px repeat(6, minmax(92px, 1fr));
+    min-width: 600px;
+  }
 }
 .cab {
   height: 38px;
@@ -19,7 +26,7 @@
   font-weight: 600;
   color: var(--ink-60);
   border-bottom: 1px solid var(--hairline);
-  background: #fbfbfa;
+  background: var(--surface-2);
   position: sticky;
   top: 0;
   z-index: 3;
@@ -44,10 +51,10 @@
   left: 0;
   right: 0;
   height: var(--h);
-  border-bottom: 1px dashed rgba(0, 0, 0, 0.05);
+  border-bottom: 1px dashed var(--grid-line);
 }
 .celda.off {
-  background: repeating-linear-gradient(135deg, rgba(0, 0, 0, 0.025) 0 6px, transparent 6px 12px);
+  background: repeating-linear-gradient(135deg, var(--rayado) 0 6px, transparent 6px 12px);
 }
 .celda.lunch {
   background: repeating-linear-gradient(135deg, rgba(255, 177, 16, 0.12) 0 6px, transparent 6px 12px);
@@ -55,7 +62,7 @@
 .ses {
   position: absolute;
   z-index: 2;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--hairline);
   border-radius: 8px;
   padding: 5px 7px;
   text-align: left;

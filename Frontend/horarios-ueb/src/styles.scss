@@ -50,6 +50,139 @@
   --nivel-7: #dbe4fd;
   --nivel-8: #fcd8cf;
   --nivel-9: #e4e5ef;
+
+  /* colores por curso en las grillas del horario */
+  --curso-1: #dcebfd;
+  --curso-2: #ffe3b0;
+  --curso-3: #fcd5cd;
+  --curso-4: #d4f0dc;
+  --curso-5: #e8dcfa;
+  --curso-6: #fbe0ef;
+  --curso-7: #d5f1f2;
+  --curso-8: #f2ecc6;
+  --curso-9: #e3e6ee;
+  --curso-10: #ffd9b8;
+  --curso-11: #d9e8c8;
+  --curso-12: #f5d6e0;
+
+  /* superficies y estados: cambian con el modo oscuro */
+  --surface: #ffffff;
+  --surface-2: #fbfbfa;
+  --surface-hover: rgba(0, 0, 0, 0.04);
+  --surface-sunken: rgba(0, 0, 0, 0.06);
+  --header-bg: rgba(246, 245, 244, 0.92);
+  --overlay: rgba(15, 15, 15, 0.32);
+  --grid-line: rgba(0, 0, 0, 0.05);
+  --rayado: rgba(0, 0, 0, 0.025);
+  --rayado-fuerte: rgba(0, 0, 0, 0.07);
+  --ghost-hover: #d6eafc;
+  --texto-azul: #005bb0;
+  --fondo-ok: #e3efd9;
+  --texto-ok: #2f5a17;
+  --fondo-alerta: #ffe7b0;
+  --texto-alerta: #6b4500;
+  --fondo-aviso: #fff2d4;
+  --fondo-error: #fdeeec;
+  --fondo-error-fuerte: #fde0db;
+  --texto-error: #a51e0b;
+  --fondo-error-suave: #fff6f4;
+  --fondo-ambar: #fff8e6;
+  --fondo-indigo: #e8eefc;
+  --rol-coord-bg: #fff0cc;
+  --rol-coord: #8a5a00;
+  --rol-comite: #0058a8;
+  --rol-admin-bg: #e4e5ef;
+  --rol-admin: #02093a;
+  --rol-inactivo-bg: #f1f0ef;
+  --rol-inactivo: #8a8784;
+}
+
+/* ---------- modo oscuro ----------
+   Mismos acentos (azul, marigold, coral, midnight); se oscurecen el papel, las superficies y los tintes pastel.
+   Solo en pantalla: al imprimir o exportar a PDF el horario sale en claro. */
+@media screen {
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+    --color-notion-blue: #2383e2;
+    --color-paper-warmth: #191918;
+    --color-pure-white: #232322;
+    --color-charcoal: #ececec;
+    --color-graphite: #b6b0a9;
+    --color-stone: #9b9b9b;
+    --color-slate: #a6a6a6;
+    --color-sky-tint: #16304a;
+    --color-peach: #4b3425;
+
+    --ink-100: rgba(255, 255, 255, 1);
+    --ink-95: rgba(255, 255, 255, 0.92);
+    --ink-90: rgba(255, 255, 255, 0.87);
+    --ink-60: rgba(255, 255, 255, 0.62);
+    --ink-54: rgba(255, 255, 255, 0.56);
+    --ink-40: rgba(255, 255, 255, 0.42);
+    --ink-20: rgba(255, 255, 255, 0.22);
+    --hairline: rgba(255, 255, 255, 0.09);
+    --hairline-strong: rgba(255, 255, 255, 0.17);
+
+    --shadow-nav: 0 1px 0 rgba(0, 0, 0, 0.4);
+    --shadow-mockup: 0 6px 18px rgba(0, 0, 0, 0.5);
+
+    --nivel-1: #16304a;
+    --nivel-2: #4a3a16;
+    --nivel-3: #4d2a24;
+    --nivel-4: #1b3550;
+    --nivel-5: #3e3229;
+    --nivel-6: #4a3c17;
+    --nivel-7: #252f55;
+    --nivel-8: #4d2a22;
+    --nivel-9: #2e2f3d;
+
+    --curso-1: #1d3a57;
+    --curso-2: #4a3812;
+    --curso-3: #4f2a24;
+    --curso-4: #1f3f2a;
+    --curso-5: #352a4d;
+    --curso-6: #4a2338;
+    --curso-7: #1c4043;
+    --curso-8: #403b1c;
+    --curso-9: #2e3240;
+    --curso-10: #4d3220;
+    --curso-11: #2f3d22;
+    --curso-12: #472a33;
+
+    --surface: #232322;
+    --surface-2: #1e1e1d;
+    --surface-hover: rgba(255, 255, 255, 0.06);
+    --surface-sunken: rgba(255, 255, 255, 0.08);
+    --header-bg: rgba(25, 25, 24, 0.9);
+    --overlay: rgba(0, 0, 0, 0.6);
+    --grid-line: rgba(255, 255, 255, 0.06);
+    --rayado: rgba(255, 255, 255, 0.035);
+    --rayado-fuerte: rgba(255, 255, 255, 0.09);
+    --ghost-hover: #1d3c5c;
+    --texto-azul: #8cc4ff;
+    --fondo-ok: #1f3a22;
+    --texto-ok: #a9d98b;
+    --fondo-alerta: #4a3812;
+    --texto-alerta: #ffd27a;
+    --fondo-aviso: #3d3014;
+    --fondo-error: #45201b;
+    --fondo-error-fuerte: #55241d;
+    --texto-error: #ff9d8f;
+    --fondo-error-suave: #3a201c;
+    --fondo-ambar: #3d3214;
+    --fondo-indigo: #232c4a;
+    --rol-coord-bg: #4a3812;
+    --rol-coord: #ffd27a;
+    --rol-comite: #8cc4ff;
+    --rol-admin-bg: #2e2f3d;
+    --rol-admin: #d2d5ec;
+    --rol-inactivo-bg: #2c2c2b;
+    --rol-inactivo: #9a9792;
+  }
+  /* el texto del logo es verde oliva: se aclara un poco sobre el fondo oscuro */
+  :root[data-theme='dark'] img[src*='ueb-logo'] {
+    filter: brightness(1.2);
+  }
 }
 
 * {
@@ -194,7 +327,7 @@ a {
 
 /* ---------- cards ---------- */
 .card {
-  background: var(--color-pure-white);
+  background: var(--surface);
   border: 1px solid var(--hairline);
   border-radius: var(--radius-cards);
   padding: 24px;
@@ -219,6 +352,16 @@ a {
 }
 .accent.marigold {
   background: var(--color-marigold);
+}
+/* acentos claros: el texto sigue oscuro también en modo oscuro */
+.accent.marigold,
+.accent.sky {
+  --ink-100: #000;
+  --ink-95: rgba(0, 0, 0, 0.95);
+  --ink-90: rgba(0, 0, 0, 0.9);
+  --ink-60: rgba(0, 0, 0, 0.6);
+  --ink-54: rgba(0, 0, 0, 0.54);
+  color: rgba(0, 0, 0, 0.95);
 }
 .accent.coral {
   background: var(--color-coral);
@@ -265,7 +408,7 @@ a {
   border-radius: var(--radius-buttons);
   padding: 6px 15px;
   border: 1px solid var(--hairline);
-  background: #fff;
+  background: var(--surface);
   color: var(--ink-95);
   cursor: pointer;
   transition: background 200ms ease, color 200ms ease, border-color 200ms ease, opacity 200ms ease;
@@ -273,7 +416,7 @@ a {
   text-decoration: none;
 }
 .btn:hover {
-  background: rgba(0, 0, 0, 0.04);
+  background: var(--surface-hover);
 }
 .btn:disabled {
   opacity: 0.45;
@@ -293,7 +436,7 @@ a {
   color: var(--color-notion-blue);
 }
 .btn-ghost:hover {
-  background: #d6eafc;
+  background: var(--ghost-hover);
 }
 .btn-outline {
   border-color: var(--ink-20);
@@ -328,25 +471,25 @@ a {
   font-size: 12px;
   font-weight: 500;
   line-height: 18px;
-  background: rgba(0, 0, 0, 0.06);
+  background: var(--surface-sunken);
   color: var(--ink-90);
   white-space: nowrap;
 }
 .pill.blue {
   background: var(--color-sky-tint);
-  color: #005bb0;
+  color: var(--texto-azul);
 }
 .pill.yellow {
-  background: #ffe7b0;
-  color: #6b4500;
+  background: var(--fondo-alerta);
+  color: var(--texto-alerta);
 }
 .pill.red {
-  background: #fde0db;
-  color: #a51e0b;
+  background: var(--fondo-error-fuerte);
+  color: var(--texto-error);
 }
 .pill.green {
-  background: #e3efd9;
-  color: #2f5a17;
+  background: var(--fondo-ok);
+  color: var(--texto-ok);
 }
 .pill.dark {
   background: var(--color-midnight-ink);
@@ -354,7 +497,7 @@ a {
 }
 .pill.peach {
   background: var(--color-peach);
-  color: #000;
+  color: var(--ink-95);
 }
 .regla {
   display: inline-block;
@@ -402,7 +545,7 @@ textarea {
   font: inherit;
   font-size: 14px;
   color: var(--ink-95);
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--hairline-strong);
   border-radius: var(--radius-buttons);
   padding: 7px 10px;
@@ -441,10 +584,10 @@ textarea {
   gap: 14px 16px;
 }
 .errores {
-  background: #fdeeec;
+  background: var(--fondo-error);
   border-radius: var(--radius-buttons);
   padding: 10px 14px;
-  color: #8e1a0a;
+  color: var(--texto-error);
   font-size: 13px;
 }
 .errores ul {
@@ -472,24 +615,24 @@ textarea {
   background: currentColor;
 }
 .rol.COORDINADOR {
-  background: #fff0cc;
-  color: #8a5a00;
+  background: var(--rol-coord-bg);
+  color: var(--rol-coord);
 }
 .rol.COMITE {
   background: var(--color-sky-tint);
-  color: #0058a8;
+  color: var(--rol-comite);
 }
 .rol.DOCENTE {
-  background: #e3efd9;
-  color: #2f5a17;
+  background: var(--fondo-ok);
+  color: var(--texto-ok);
 }
 .rol.ADMINISTRADOR {
-  background: #e4e5ef;
-  color: var(--color-midnight-ink);
+  background: var(--rol-admin-bg);
+  color: var(--rol-admin);
 }
 .rol.INACTIVO {
-  background: #f1f0ef;
-  color: #8a8784;
+  background: var(--rol-inactivo-bg);
+  color: var(--rol-inactivo);
 }
 
 /* ---------- tablas ---------- */
@@ -497,7 +640,7 @@ textarea {
   overflow: auto;
   border: 1px solid var(--hairline);
   border-radius: var(--radius-cards);
-  background: #fff;
+  background: var(--surface);
 }
 table.tabla {
   width: 100%;
@@ -511,7 +654,7 @@ table.tabla {
   color: var(--ink-54);
   padding: 10px 14px;
   border-bottom: 1px solid var(--hairline);
-  background: #fbfbfa;
+  background: var(--surface-2);
   position: sticky;
   top: 0;
   z-index: 1;
@@ -529,7 +672,7 @@ table.tabla {
   cursor: pointer;
 }
 .tabla tr.clickable:hover td {
-  background: #fafaf9;
+  background: var(--surface-hover);
 }
 .tabla .num {
   text-align: right;
@@ -539,7 +682,7 @@ table.tabla {
 /* ---------- barra de progreso ---------- */
 .barra {
   height: 8px;
-  background: rgba(0, 0, 0, 0.06);
+  background: var(--surface-sunken);
   border-radius: var(--radius-pills);
   overflow: hidden;
   min-width: 80px;
@@ -562,7 +705,7 @@ table.tabla {
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(15, 15, 15, 0.32);
+  background: var(--overlay);
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -572,7 +715,7 @@ table.tabla {
   animation: fade 160ms ease;
 }
 .modal {
-  background: #fff;
+  background: var(--surface);
   border-radius: var(--radius-cards);
   box-shadow: var(--shadow-mockup);
   width: min(720px, 100%);
@@ -627,17 +770,17 @@ table.tabla {
   font-size: 13.5px;
 }
 .aviso.warn {
-  background: #fff2d4;
+  background: var(--fondo-aviso);
 }
 .aviso.error {
-  background: #fdeeec;
+  background: var(--fondo-error);
 }
 
 /* ---------- pestañas ---------- */
 .tabs {
   display: inline-flex;
   gap: 2px;
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--surface-sunken);
   padding: 3px;
   border-radius: var(--radius-buttons);
 }
@@ -654,7 +797,7 @@ table.tabla {
   transition: background 200ms ease, color 200ms ease;
 }
 .tabs button.on {
-  background: #fff;
+  background: var(--surface);
   color: var(--ink-95);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
@@ -706,8 +849,8 @@ table.tabla {
   .page-head > .row .btn {
     flex: 1 1 auto;
   }
-  /* las grillas con columnas fijas en línea pasan a una sola columna */
-  .grid[style] {
+  /* las grillas con columnas fijas en línea pasan a una sola columna (las de cifras quedan en dos, más abajo) */
+  .grid[style]:not(.cols-4) {
     grid-template-columns: minmax(0, 1fr) !important;
   }
   .card {

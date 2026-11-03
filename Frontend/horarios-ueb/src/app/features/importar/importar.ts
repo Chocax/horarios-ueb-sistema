@@ -71,7 +71,7 @@ import { Icon } from '../../shared/icon';
                 <button class="btn btn-primary" (click)="confirmar(r)" [disabled]="store.ocupado()"><app-icon name="check" [size]="16" /> Confirmar importación</button>
               </div>
             } @else {
-              <div class="aviso" style="margin-top:16px;background:#e3efd9">
+              <div class="aviso" style="margin-top:16px;background:var(--fondo-ok)">
                 <app-icon name="check" [size]="18" />
                 <div><strong>Importación aplicada.</strong> {{ r.resumen }}. Quedó registrada en la bitácora.</div>
               </div>
@@ -84,7 +84,7 @@ import { Icon } from '../../shared/icon';
   styles: [
     `
       .cols { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-      code { background: rgba(0,0,0,.06); border-radius: 4px; padding: 2px 6px; font-size: 12.5px; }
+      code { background: var(--surface-sunken); border-radius: 4px; padding: 2px 6px; font-size: 12.5px; }
       .drop { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 32px 16px; border: 2px dashed var(--ink-20); border-radius: 12px;
         cursor: pointer; text-align: center; color: var(--ink-60); transition: border-color 200ms ease, background 200ms ease; }
       .drop:hover, .drop.over { border-color: var(--color-notion-blue); background: var(--color-sky-tint); }

@@ -137,7 +137,7 @@ import { creditosPorSemestre } from '../../core/plan';
       .semestres { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 10px; }
       .sem { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
       .sem strong { font-size: 22px; letter-spacing: -0.5px; }
-      .barra { display: block; height: 6px; border-radius: 99px; background: rgba(0,0,0,0.06); overflow: hidden; }
+      .barra { display: block; height: 6px; border-radius: 99px; background: var(--surface-sunken); overflow: hidden; }
       .barra span { display: block; height: 100%; border-radius: 99px; }
       @media (max-width: 1100px) { .semestres { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
       @media (max-width: 640px) { .semestres { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

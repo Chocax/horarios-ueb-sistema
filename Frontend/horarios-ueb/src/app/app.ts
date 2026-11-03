@@ -26,7 +26,7 @@ import { ToastHost } from './shared/toast-host';
      .carga::after { content: ''; position: absolute; inset: 0; width: 40%; background: var(--color-notion-blue); animation: carga 1.1s ease-in-out infinite; }
      @keyframes carga { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
      .procesando { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 90; display: flex; align-items: center; gap: 12px;
-       max-width: min(440px, calc(100vw - 32px)); padding: 12px 16px; border-radius: 12px; background: #fff; border: 1px solid var(--hairline);
+       max-width: min(440px, calc(100vw - 32px)); padding: 12px 16px; border-radius: 12px; background: var(--surface); border: 1px solid var(--hairline);
        box-shadow: var(--shadow-mockup, 0 8px 24px rgba(0,0,0,.12)); animation: entra 200ms ease; }
      .procesando div { display: flex; flex-direction: column; gap: 2px; font-size: 13px; }
      .procesando span:not(.spinner) { color: var(--ink-60); }
