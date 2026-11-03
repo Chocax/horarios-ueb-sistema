@@ -71,3 +71,6 @@ desktop.ini
 
 # reportes que genera Bruno al correr la colección (las evidencias oficiales van en Pruebas/evidencias)
 Backend/horarios-ueb-back/bruno/reportes/
+
+# guion interno de la sustentación (no se publica)
+Docs/Pruebas/privado/

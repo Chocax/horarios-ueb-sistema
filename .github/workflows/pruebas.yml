@@ -20,8 +20,8 @@ jobs:
       run:
         working-directory: Backend/horarios-ueb-back
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
@@ -33,7 +33,7 @@ jobs:
           nohup ./gradlew bootRun --no-daemon > backend.log 2>&1 &
           for i in $(seq 1 90); do curl -sf http://localhost:8080/api/salud && exit 0; sleep 2; done
           cat backend.log; exit 1
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
       - name: Colección de Bruno
@@ -42,6 +42,8 @@ jobs:
           CLAVE: ${{ secrets.CLAVE_PRUEBAS }}
         run: |
           if [ -z "$CLAVE" ]; then echo "::warning::Falta el secreto CLAVE_PRUEBAS: se omite la colección de Bruno"; exit 0; fi
+          # la carpeta de reportes está en .gitignore: Bruno falla (código 2) si no existe
+          mkdir -p reportes
           npx --yes @usebruno/cli@4.3.0 run -r --env local --env-var "clave=$CLAVE" --reporter-junit reportes/bruno.xml --reporter-html reportes/bruno.html
       - name: Guardar reportes
         if: always()
@@ -60,8 +62,8 @@ jobs:
       run:
         working-directory: Frontend/horarios-ueb
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
           cache: npm
