@@ -10,6 +10,18 @@
   <link rel="apple-touch-icon" href="ueb-simbolo.png">
 </head>
 <body>
-  <app-root></app-root>
+  <!-- Pantalla de carga mientras se descarga la aplicación (Angular la reemplaza al arrancar) -->
+  <app-root>
+    <div style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f6f5f4;font-family:'Inter Variable',Inter,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;text-align:center;padding:0 24px">
+      <img src="ueb-logo.png" alt="Universidad El Bosque" width="150" style="height:auto">
+      <div style="margin-top:22px;font-size:26px;font-weight:600;letter-spacing:-0.6px;color:rgba(0,0,0,.95)">Horarios UEB</div>
+      <div style="margin-top:4px;font-size:13.5px;color:rgba(0,0,0,.6)">Facultad de Ingeniería · Programa de Ingeniería de Sistemas</div>
+      <div style="position:relative;width:220px;height:4px;margin-top:26px;border-radius:99px;background:#e6f3fe;overflow:hidden">
+        <span style="position:absolute;inset:0;width:40%;border-radius:99px;background:#0075de;animation:ueb-carga 1.2s ease-in-out infinite"></span>
+      </div>
+      <div style="margin-top:14px;font-size:14px;font-weight:500;color:rgba(0,0,0,.9)">Cargando el portal…</div>
+    </div>
+    <style>@keyframes ueb-carga{from{transform:translateX(-110%)}to{transform:translateX(260%)}}</style>
+  </app-root>
 </body>
 </html>

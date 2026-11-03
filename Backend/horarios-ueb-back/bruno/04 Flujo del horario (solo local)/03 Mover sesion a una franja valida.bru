@@ -1,0 +1,45 @@
+meta {
+  name: Mover sesion a una franja valida
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseUrl}}/versiones/{{versionGenerada}}/sesiones/{{sesionId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{tokenCoordinador}}
+}
+
+body:json {
+  {
+    "dia": {{sesionDia}},
+    "inicio": {{sesionInicio}},
+    "docenteId": "{{sesionDocente}}",
+    "aulaId": "{{sesionAula}}"
+  }
+}
+
+script:pre-request {
+  // escribe datos: solo se ejecuta contra el backend local (perfil H2), nunca contra producción
+  if (bru.getEnvName() !== 'local') {
+    bru.runner.skipRequest();
+  }
+}
+
+tests {
+  test("acepta y guarda el cambio", function () {
+    expect(res.status).to.equal(200);
+    expect(res.body.valor.id).to.equal(bru.getVar('sesionId'));
+  });
+  test("responde rápido (respuesta liviana)", function () {
+    expect(res.responseTime).to.be.below(2000);
+  });
+}
+
+docs {
+  TC-22
+}

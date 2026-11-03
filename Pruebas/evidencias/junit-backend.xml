@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="co.edu.unbosque.horariosuebback.HorariosUebBackApplicationTests" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-03T00:05:04.227Z" hostname="CHOCACO911" time="24.419">
+  <properties/>
+  <testcase name="elHorarioSemilla2026_1NoTieneViolaciones()" classname="co.edu.unbosque.horariosuebback.HorariosUebBackApplicationTests" time="1.974"/>
+  <testcase name="elViernesNoQuedaDescargado()" classname="co.edu.unbosque.horariosuebback.HorariosUebBackApplicationTests" time="0.751"/>
+  <testcase name="politicaDeContrasenas()" classname="co.edu.unbosque.horariosuebback.HorariosUebBackApplicationTests" time="0.011"/>
+  <testcase name="sabadoDiurnoSoloComoUltimoRecursoYAulasRepartidas()" classname="co.edu.unbosque.horariosuebback.HorariosUebBackApplicationTests" time="0.373"/>
+  <testcase name="cadaReglaRechazaYSeNombra()" classname="co.edu.unbosque.horariosuebback.HorariosUebBackApplicationTests" time="0.082"/>
+  <testcase name="elGeneradorUbicaTodos2026_2SinViolaciones()" classname="co.edu.unbosque.horariosuebback.HorariosUebBackApplicationTests" time="0.347"/>
+  <testcase name="loginConBcryptYRechazoDeClaveErrada()" classname="co.edu.unbosque.horariosuebback.HorariosUebBackApplicationTests" time="0.693"/>
+  <system-out><![CDATA[19:05:04.652 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [co.edu.unbosque.horariosuebback.HorariosUebBackApplicationTests]: HorariosUebBackApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+19:05:04.899 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration co.edu.unbosque.horariosuebback.HorariosUebBackApplication for test class co.edu.unbosque.horariosuebback.HorariosUebBackApplicationTests
+19:05:05.088 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [co.edu.unbosque.horariosuebback.HorariosUebBackApplicationTests]: HorariosUebBackApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+19:05:05.090 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration co.edu.unbosque.horariosuebback.HorariosUebBackApplication for test class co.edu.unbosque.horariosuebback.HorariosUebBackApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-02T19:05:05.870-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] c.e.u.h.HorariosUebBackApplicationTests  : Starting HorariosUebBackApplicationTests using Java 17.0.18 with PID 24664 (started by santi in C:\Repos\Final-Horarios-UEB\Backend\horarios-ueb-back)
+2026-11-02T19:05:05.874-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] c.e.u.h.HorariosUebBackApplicationTests  : No active profile set, falling back to 1 default profile: "local"
+2026-11-02T19:05:08.125-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-02T19:05:08.130-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-02T19:05:08.591-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 426 ms. Found 13 JPA repository interfaces.
+2026-11-02T19:05:10.581-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-02T19:05:11.155-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:pruebas user=SA
+2026-11-02T19:05:11.163-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-02T19:05:11.211-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:h2:mem:pruebas (H2 2.4)
+2026-11-02T19:05:11.388-05:00  WARN 24664 --- [horarios-ueb-back] [    Test worker] o.f.c.internal.database.base.Database    : Using H2 2.4.240 which is newer than the version Flyway has been verified with. The latest verified version of H2 is 2.3.232.
+2026-11-02T19:05:11.505-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-11-02T19:05:11.516-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 4 migrations (execution time 00:00.081s)
+2026-11-02T19:05:11.550-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-11-02T19:05:11.726-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-11-02T19:05:11.791-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - esquema"
+2026-11-02T19:05:12.042-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - datos semilla"
+2026-11-02T19:05:12.322-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - horario 2026 1"
+2026-11-02T19:05:12.452-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "4 - aulas y horario 2026 1"
+2026-11-02T19:05:12.560-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] o.f.core.internal.command.DbMigrate      : Successfully applied 4 migrations to schema "public", now at version v4 (execution time 00:00.521s)
+2026-11-02T19:05:12.886-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-11-02T19:05:13.112-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.13.Final
+2026-11-02T19:05:14.742-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-02T19:05:14.949-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:pruebas]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: pruebas/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-02T19:05:14.986-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] org.hibernate.orm.incubating             : HHH90006001: Setting 'hibernate.type.preferred_instant_jdbc_type' is still incubating (see Javadoc of corresponding member of 'org.hibernate.cfg.AvailableSettings')
+2026-11-02T19:05:15.617-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] org.hibernate.orm.incubating             : HHH90006001: Setting 'hibernate.type.preferred_instant_jdbc_type' is still incubating (see Javadoc of corresponding member of 'org.hibernate.cfg.AvailableSettings')
+2026-11-02T19:05:15.619-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] org.hibernate.orm.incubating             : HHH90006001: Setting 'hibernate.type.preferred_instant_jdbc_type' is still incubating (see Javadoc of corresponding member of 'org.hibernate.cfg.AvailableSettings')
+2026-11-02T19:05:15.622-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] org.hibernate.orm.incubating             : HHH90006001: Setting 'hibernate.type.preferred_instant_jdbc_type' is still incubating (see Javadoc of corresponding member of 'org.hibernate.cfg.AvailableSettings')
+2026-11-02T19:05:15.623-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] org.hibernate.orm.incubating             : HHH90006001: Setting 'hibernate.type.preferred_instant_jdbc_type' is still incubating (see Javadoc of corresponding member of 'org.hibernate.cfg.AvailableSettings')
+2026-11-02T19:05:15.667-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] org.hibernate.orm.incubating             : HHH90006001: Setting 'hibernate.type.preferred_instant_jdbc_type' is still incubating (see Javadoc of corresponding member of 'org.hibernate.cfg.AvailableSettings')
+2026-11-02T19:05:17.495-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-02T19:05:17.505-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] org.hibernate.orm.jdbc.batch             : HHH100501: Automatic JDBC statement batching enabled (maximum batch size 50)
+2026-11-02T19:05:17.514-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-02T19:05:17.720-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-02T19:05:24.342-05:00  INFO 24664 --- [horarios-ueb-back] [    Test worker] c.e.u.h.HorariosUebBackApplicationTests  : Started HorariosUebBackApplicationTests in 19.106 seconds (process running for 23.187)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

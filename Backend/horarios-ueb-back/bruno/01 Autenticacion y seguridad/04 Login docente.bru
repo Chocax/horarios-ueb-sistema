@@ -1,0 +1,40 @@
+meta {
+  name: Login docente
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/auth/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "correo": "{{correoDocente}}",
+    "clave": "{{clave}}"
+  }
+}
+
+script:post-response {
+  if (res.status === 200) {
+    bru.setVar('tokenDocente', res.body.valor.token);
+  }
+}
+
+tests {
+  test("inicia sesión y entrega un token JWT", function () {
+    expect(res.status).to.equal(200);
+    expect(res.body.ok).to.equal(true);
+    expect(res.body.valor.token.split('.')).to.have.lengthOf(3);
+  });
+  test("el usuario no trae la contraseña ni su hash", function () {
+    expect(res.body.valor.usuario).to.not.have.property('hashClave');
+    expect(JSON.stringify(res.body)).to.not.contain('$2a$');
+  });
+}
+
+docs {
+  TC-02 · Inicio de sesión del rol docente con credenciales válidas.
+}

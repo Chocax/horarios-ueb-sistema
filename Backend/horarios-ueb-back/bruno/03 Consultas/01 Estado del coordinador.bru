@@ -1,0 +1,41 @@
+meta {
+  name: Estado del coordinador
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/estado?periodo={{periodoCerrado}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{tokenCoordinador}}
+}
+
+script:post-response {
+  const pub = (res.body.versiones || []).find(v => v.periodoId === bru.getEnvVar('periodoCerrado') && v.estado === 'PUBLICADA');
+  if (pub) bru.setVar('versionPublicada', pub.id);
+}
+
+tests {
+  test("trae el catálogo completo", function () {
+    expect(res.status).to.equal(200);
+    expect(res.body.cursos.length).to.be.at.least(60);
+    expect(res.body.aulas.length).to.be.at.least(86);
+    expect(res.body.docentes.length).to.be.at.least(55);
+  });
+  test("2026-1 tiene un horario publicado con sesiones", function () {
+    const pub = res.body.versiones.find(v => v.periodoId === 'per-2026-1' && v.estado === 'PUBLICADA');
+    expect(pub).to.exist;
+    expect(pub.sesiones.length).to.be.above(250);
+  });
+  test("el coordinador no recibe usuarios", function () {
+    expect(res.body.usuarios).to.have.lengthOf(0);
+  });
+}
+
+docs {
+  TC-29
+}

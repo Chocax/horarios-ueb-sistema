@@ -1,0 +1,30 @@
+meta {
+  name: Bitacora del coordinador
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/bitacora?limite=20
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{tokenCoordinador}}
+}
+
+tests {
+  test("lista los últimos movimientos con usuario y fecha", function () {
+    expect(res.status).to.equal(200);
+    expect(res.body.length).to.be.above(0);
+    expect(res.body[0]).to.have.all.keys('id', 'fecha', 'usuario', 'rol', 'accion', 'detalle');
+  });
+  test("registró el intento rechazado del comité", function () {
+    expect(res.body.map(b => b.accion)).to.include('Acción rechazada por permisos');
+  });
+}
+
+docs {
+  TC-32
+}

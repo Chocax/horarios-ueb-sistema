@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="Salud del servicio" file="01 Autenticacion y seguridad\01 Salud del servicio.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.704" hostname="CHOCACO911" time="0.304">
+    <testcase name="el servicio y la base de datos responden" status="pass" classname="01 Autenticacion y seguridad\01 Salud del servicio" time="0.152"/>
+    <testcase name="responde en menos de 3 s con el servidor despierto" status="pass" classname="01 Autenticacion y seguridad\01 Salud del servicio" time="0.152"/>
+  </testsuite>
+  <testsuite name="Login coordinador" file="01 Autenticacion y seguridad\02 Login coordinador.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.708" hostname="CHOCACO911" time="0.384">
+    <testcase name="inicia sesión y entrega un token JWT" status="pass" classname="01 Autenticacion y seguridad\02 Login coordinador" time="0.192"/>
+    <testcase name="el usuario no trae la contraseña ni su hash" status="pass" classname="01 Autenticacion y seguridad\02 Login coordinador" time="0.192"/>
+  </testsuite>
+  <testsuite name="Login comite" file="01 Autenticacion y seguridad\03 Login comite.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.708" hostname="CHOCACO911" time="0.384">
+    <testcase name="inicia sesión y entrega un token JWT" status="pass" classname="01 Autenticacion y seguridad\03 Login comite" time="0.192"/>
+    <testcase name="el usuario no trae la contraseña ni su hash" status="pass" classname="01 Autenticacion y seguridad\03 Login comite" time="0.192"/>
+  </testsuite>
+  <testsuite name="Login docente" file="01 Autenticacion y seguridad\04 Login docente.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.708" hostname="CHOCACO911" time="0.359">
+    <testcase name="inicia sesión y entrega un token JWT" status="pass" classname="01 Autenticacion y seguridad\04 Login docente" time="0.180"/>
+    <testcase name="el usuario no trae la contraseña ni su hash" status="pass" classname="01 Autenticacion y seguridad\04 Login docente" time="0.180"/>
+  </testsuite>
+  <testsuite name="Login administrador" file="01 Autenticacion y seguridad\05 Login administrador.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.708" hostname="CHOCACO911" time="0.365">
+    <testcase name="inicia sesión y entrega un token JWT" status="pass" classname="01 Autenticacion y seguridad\05 Login administrador" time="0.183"/>
+    <testcase name="el usuario no trae la contraseña ni su hash" status="pass" classname="01 Autenticacion y seguridad\05 Login administrador" time="0.183"/>
+  </testsuite>
+  <testsuite name="Login con clave incorrecta" file="01 Autenticacion y seguridad\06 Login con clave incorrecta.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.709" hostname="CHOCACO911" time="0.235">
+    <testcase name="responde 401 con mensaje en español" status="pass" classname="01 Autenticacion y seguridad\06 Login con clave incorrecta" time="0.118"/>
+    <testcase name="el mensaje no revela si el correo existe" status="pass" classname="01 Autenticacion y seguridad\06 Login con clave incorrecta" time="0.118"/>
+  </testsuite>
+  <testsuite name="Inyeccion SQL en login" file="01 Autenticacion y seguridad\07 Inyeccion SQL en login.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.709" hostname="CHOCACO911" time="0.240">
+    <testcase name="responde 401 con mensaje en español" status="pass" classname="01 Autenticacion y seguridad\07 Inyeccion SQL en login" time="0.120"/>
+    <testcase name="no hay error de servidor ni datos expuestos" status="pass" classname="01 Autenticacion y seguridad\07 Inyeccion SQL en login" time="0.120"/>
+  </testsuite>
+  <testsuite name="Estado sin token" file="01 Autenticacion y seguridad\08 Estado sin token.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-03T00:03:40.709" hostname="CHOCACO911" time="0.130">
+    <testcase name="responde 401 con mensaje en español" status="pass" classname="01 Autenticacion y seguridad\08 Estado sin token" time="0.130"/>
+  </testsuite>
+  <testsuite name="Token alterado" file="01 Autenticacion y seguridad\09 Token alterado.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-03T00:03:40.709" hostname="CHOCACO911" time="0.143">
+    <testcase name="responde 401 con mensaje en español" status="pass" classname="01 Autenticacion y seguridad\09 Token alterado" time="0.143"/>
+  </testsuite>
+  <testsuite name="Comite intenta generar horario" file="01 Autenticacion y seguridad\10 Comite intenta generar horario.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-03T00:03:40.709" hostname="CHOCACO911" time="0.140">
+    <testcase name="responde 403 con mensaje en español" status="pass" classname="01 Autenticacion y seguridad\10 Comite intenta generar horario" time="0.140"/>
+  </testsuite>
+  <testsuite name="Docente intenta ver usuarios" file="01 Autenticacion y seguridad\11 Docente intenta ver usuarios.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-03T00:03:40.710" hostname="CHOCACO911" time="0.141">
+    <testcase name="responde 403 con mensaje en español" status="pass" classname="01 Autenticacion y seguridad\11 Docente intenta ver usuarios" time="0.141"/>
+  </testsuite>
+  <testsuite name="Docente cambia disponibilidad ajena" file="01 Autenticacion y seguridad\12 Docente cambia disponibilidad ajena.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-03T00:03:40.710" hostname="CHOCACO911" time="0.124">
+    <testcase name="responde 403 con mensaje en español" status="pass" classname="01 Autenticacion y seguridad\12 Docente cambia disponibilidad ajena" time="0.124"/>
+  </testsuite>
+  <testsuite name="Politica de contrasenas" file="01 Autenticacion y seguridad\13 Politica de contrasenas.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.710" hostname="CHOCACO911" time="0.342">
+    <testcase name="responde 422 con mensaje en español" status="pass" classname="01 Autenticacion y seguridad\13 Politica de contrasenas" time="0.171"/>
+    <testcase name="explica qué le falta a la contraseña" status="pass" classname="01 Autenticacion y seguridad\13 Politica de contrasenas" time="0.171"/>
+  </testsuite>
+  <testsuite name="Parametros con franja invalida" file="02 Validaciones del catalogo\01 Parametros con franja invalida.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.710" hostname="CHOCACO911" time="0.182">
+    <testcase name="responde 422 con mensaje en español" status="pass" classname="02 Validaciones del catalogo\01 Parametros con franja invalida" time="0.091"/>
+    <testcase name="nombra el parámetro inválido" status="pass" classname="02 Validaciones del catalogo\01 Parametros con franja invalida" time="0.091"/>
+  </testsuite>
+  <testsuite name="Grupo con cupo 45 (R9)" file="02 Validaciones del catalogo\02 Grupo con cupo 45 (R9).bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.710" hostname="CHOCACO911" time="0.171">
+    <testcase name="responde 422 con mensaje en español" status="pass" classname="02 Validaciones del catalogo\02 Grupo con cupo 45 (R9)" time="0.085"/>
+    <testcase name="cita la regla R9 y el cupo efectivo de 44" status="pass" classname="02 Validaciones del catalogo\02 Grupo con cupo 45 (R9)" time="0.085"/>
+  </testsuite>
+  <testsuite name="Docente sin vinculacion" file="02 Validaciones del catalogo\03 Docente sin vinculacion.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.710" hostname="CHOCACO911" time="0.171">
+    <testcase name="responde 422 con mensaje en español" status="pass" classname="02 Validaciones del catalogo\03 Docente sin vinculacion" time="0.085"/>
+    <testcase name="pide la vinculación" status="pass" classname="02 Validaciones del catalogo\03 Docente sin vinculacion" time="0.085"/>
+  </testsuite>
+  <testsuite name="Curso con sesiones fuera de rango" file="02 Validaciones del catalogo\04 Curso con sesiones fuera de rango.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-03T00:03:40.710" hostname="CHOCACO911" time="0.152">
+    <testcase name="responde 422 con mensaje en español" status="pass" classname="02 Validaciones del catalogo\04 Curso con sesiones fuera de rango" time="0.152"/>
+  </testsuite>
+  <testsuite name="Aula sin capacidad" file="02 Validaciones del catalogo\05 Aula sin capacidad.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-03T00:03:40.711" hostname="CHOCACO911" time="0.170">
+    <testcase name="responde 422 con mensaje en español" status="pass" classname="02 Validaciones del catalogo\05 Aula sin capacidad" time="0.170"/>
+  </testsuite>
+  <testsuite name="Periodo repetido" file="02 Validaciones del catalogo\06 Periodo repetido.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.711" hostname="CHOCACO911" time="0.173">
+    <testcase name="responde 422 con mensaje en español" status="pass" classname="02 Validaciones del catalogo\06 Periodo repetido" time="0.087"/>
+    <testcase name="avisa que el periodo ya existe" status="pass" classname="02 Validaciones del catalogo\06 Periodo repetido" time="0.087"/>
+  </testsuite>
+  <testsuite name="Importacion con una fila invalida" file="02 Validaciones del catalogo\07 Importacion con una fila invalida.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.711" hostname="CHOCACO911" time="0.168">
+    <testcase name="responde 422 con mensaje en español" status="pass" classname="02 Validaciones del catalogo\07 Importacion con una fila invalida" time="0.084"/>
+    <testcase name="no se carga ninguna fila (todo o nada)" status="pass" classname="02 Validaciones del catalogo\07 Importacion con una fila invalida" time="0.084"/>
+  </testsuite>
+  <testsuite name="Numero de grupos que excede el cupo" file="02 Validaciones del catalogo\08 Numero de grupos que excede el cupo.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.711" hostname="CHOCACO911" time="0.169">
+    <testcase name="responde 422 con mensaje en español" status="pass" classname="02 Validaciones del catalogo\08 Numero de grupos que excede el cupo" time="0.084"/>
+    <testcase name="explica el cupo efectivo (R9)" status="pass" classname="02 Validaciones del catalogo\08 Numero de grupos que excede el cupo" time="0.084"/>
+  </testsuite>
+  <testsuite name="Horario de atencion de 3 horas" file="02 Validaciones del catalogo\09 Horario de atencion de 3 horas.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.711" hostname="CHOCACO911" time="0.175">
+    <testcase name="responde 422 con mensaje en español" status="pass" classname="02 Validaciones del catalogo\09 Horario de atencion de 3 horas" time="0.087"/>
+    <testcase name="el horario de atención es de 1 o 2 horas" status="pass" classname="02 Validaciones del catalogo\09 Horario de atencion de 3 horas" time="0.087"/>
+  </testsuite>
+  <testsuite name="Estado del coordinador" file="03 Consultas\01 Estado del coordinador.bru" errors="0" failures="0" skipped="0" tests="3" timestamp="2026-11-03T00:03:40.711" hostname="CHOCACO911" time="0.381">
+    <testcase name="trae el catálogo completo" status="pass" classname="03 Consultas\01 Estado del coordinador" time="0.127"/>
+    <testcase name="2026-1 tiene un horario publicado con sesiones" status="pass" classname="03 Consultas\01 Estado del coordinador" time="0.127"/>
+    <testcase name="el coordinador no recibe usuarios" status="pass" classname="03 Consultas\01 Estado del coordinador" time="0.127"/>
+  </testsuite>
+  <testsuite name="Estado del docente" file="03 Consultas\02 Estado del docente.bru" errors="0" failures="0" skipped="0" tests="3" timestamp="2026-11-03T00:03:40.711" hostname="CHOCACO911" time="0.184">
+    <testcase name="solo recibe sus propios datos de docente" status="pass" classname="03 Consultas\02 Estado del docente" time="0.061"/>
+    <testcase name="solo ve versiones publicadas y solo sus sesiones" status="pass" classname="03 Consultas\02 Estado del docente" time="0.061"/>
+    <testcase name="no recibe observaciones del comité ni usuarios" status="pass" classname="03 Consultas\02 Estado del docente" time="0.061"/>
+  </testsuite>
+  <testsuite name="Horario publicado 2026-1" file="03 Consultas\03 Horario publicado 2026-1.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.712" hostname="CHOCACO911" time="0.174">
+    <testcase name="el comité consulta el horario publicado sin violaciones duras" status="pass" classname="03 Consultas\03 Horario publicado 2026-1" time="0.087"/>
+    <testcase name="ningún grupo tiene dos sesiones el mismo día (R8)" status="pass" classname="03 Consultas\03 Horario publicado 2026-1" time="0.087"/>
+  </testsuite>
+  <testsuite name="Bitacora del coordinador" file="03 Consultas\04 Bitacora del coordinador.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.712" hostname="CHOCACO911" time="0.158">
+    <testcase name="lista los últimos movimientos con usuario y fecha" status="pass" classname="03 Consultas\04 Bitacora del coordinador" time="0.079"/>
+    <testcase name="registró el intento rechazado del comité" status="pass" classname="03 Consultas\04 Bitacora del coordinador" time="0.079"/>
+  </testsuite>
+  <testsuite name="Bitacora vista por un docente" file="03 Consultas\05 Bitacora vista por un docente.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-03T00:03:40.712" hostname="CHOCACO911" time="0.133">
+    <testcase name="responde 403 con mensaje en español" status="pass" classname="03 Consultas\05 Bitacora vista por un docente" time="0.133"/>
+  </testsuite>
+  <testsuite name="Usuarios del administrador" file="03 Consultas\06 Usuarios del administrador.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.712" hostname="CHOCACO911" time="0.152">
+    <testcase name="lista los usuarios sin contraseñas" status="pass" classname="03 Consultas\06 Usuarios del administrador" time="0.076"/>
+    <testcase name="todos los docentes tienen usuario" status="pass" classname="03 Consultas\06 Usuarios del administrador" time="0.076"/>
+  </testsuite>
+  <testsuite name="Generar propuesta" file="04 Flujo del horario (solo local)\01 Generar propuesta.bru" errors="0" failures="0" skipped="0" tests="3" timestamp="2026-11-03T00:03:40.712" hostname="CHOCACO911" time="0.742">
+    <testcase name="crea la versión en borrador sin grupos pendientes" status="pass" classname="04 Flujo del horario (solo local)\01 Generar propuesta" time="0.247"/>
+    <testcase name="genera en menos de 60 s (RNF-01)" status="pass" classname="04 Flujo del horario (solo local)\01 Generar propuesta" time="0.247"/>
+    <testcase name="los grupos diurnos casi no tienen clase el sábado" status="pass" classname="04 Flujo del horario (solo local)\01 Generar propuesta" time="0.247"/>
+  </testsuite>
+  <testsuite name="Mover sesion al almuerzo (R3)" file="04 Flujo del horario (solo local)\02 Mover sesion al almuerzo (R3).bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.712" hostname="CHOCACO911" time="0.317">
+    <testcase name="responde 422 con mensaje en español" status="pass" classname="04 Flujo del horario (solo local)\02 Mover sesion al almuerzo (R3)" time="0.158"/>
+    <testcase name="nombra la regla R3" status="pass" classname="04 Flujo del horario (solo local)\02 Mover sesion al almuerzo (R3)" time="0.158"/>
+  </testsuite>
+  <testsuite name="Mover sesion a una franja valida" file="04 Flujo del horario (solo local)\03 Mover sesion a una franja valida.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.712" hostname="CHOCACO911" time="0.334">
+    <testcase name="acepta y guarda el cambio" status="pass" classname="04 Flujo del horario (solo local)\03 Mover sesion a una franja valida" time="0.167"/>
+    <testcase name="responde rápido (respuesta liviana)" status="pass" classname="04 Flujo del horario (solo local)\03 Mover sesion a una franja valida" time="0.167"/>
+  </testsuite>
+  <testsuite name="Concepto del comite" file="04 Flujo del horario (solo local)\04 Concepto del comite.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-03T00:03:40.712" hostname="CHOCACO911" time="0.281">
+    <testcase name="registra la observación con el autor" status="pass" classname="04 Flujo del horario (solo local)\04 Concepto del comite" time="0.281"/>
+  </testsuite>
+  <testsuite name="Publicar version" file="04 Flujo del horario (solo local)\05 Publicar version.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-03T00:03:40.713" hostname="CHOCACO911" time="0.325">
+    <testcase name="publica la versión sin violaciones ni pendientes" status="pass" classname="04 Flujo del horario (solo local)\05 Publicar version" time="0.325"/>
+  </testsuite>
+  <testsuite name="Publicar de nuevo (bloqueado)" file="04 Flujo del horario (solo local)\06 Publicar de nuevo (bloqueado).bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.713" hostname="CHOCACO911" time="0.315">
+    <testcase name="responde 422 con mensaje en español" status="pass" classname="04 Flujo del horario (solo local)\06 Publicar de nuevo (bloqueado)" time="0.157"/>
+    <testcase name="solo se publica la versión de trabajo" status="pass" classname="04 Flujo del horario (solo local)\06 Publicar de nuevo (bloqueado)" time="0.157"/>
+  </testsuite>
+  <testsuite name="Restaurar como borrador" file="04 Flujo del horario (solo local)\07 Restaurar como borrador.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-03T00:03:40.713" hostname="CHOCACO911" time="0.466">
+    <testcase name="crea una versión nueva en borrador sin tocar la publicada" status="pass" classname="04 Flujo del horario (solo local)\07 Restaurar como borrador" time="0.466"/>
+  </testsuite>
+  <testsuite name="Registrar inscritos" file="04 Flujo del horario (solo local)\08 Registrar inscritos.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-03T00:03:40.713" hostname="CHOCACO911" time="0.261">
+    <testcase name="guarda los inscritos del grupo" status="pass" classname="04 Flujo del horario (solo local)\08 Registrar inscritos" time="0.261"/>
+  </testsuite>
+  <testsuite name="Cerrar grupo con cupo suficiente (bloqueado)" file="04 Flujo del horario (solo local)\09 Cerrar grupo con cupo suficiente (bloqueado).bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-03T00:03:40.713" hostname="CHOCACO911" time="0.281">
+    <testcase name="responde 422 con mensaje en español" status="pass" classname="04 Flujo del horario (solo local)\09 Cerrar grupo con cupo suficiente (bloqueado)" time="0.140"/>
+    <testcase name="solo se cierran grupos por debajo del mínimo" status="pass" classname="04 Flujo del horario (solo local)\09 Cerrar grupo con cupo suficiente (bloqueado)" time="0.140"/>
+  </testsuite>
+  <testsuite name="Borrar versiones de prueba" file="04 Flujo del horario (solo local)\10 Borrar versiones de prueba.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-03T00:03:40.713" hostname="CHOCACO911" time="0.303">
+    <testcase name="el administrador borra las versiones creadas por la prueba" status="pass" classname="04 Flujo del horario (solo local)\10 Borrar versiones de prueba" time="0.303"/>
+  </testsuite>
+  <testsuite name="Coordinador no puede borrar versiones" file="04 Flujo del horario (solo local)\11 Coordinador no puede borrar versiones.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-03T00:03:40.713" hostname="CHOCACO911" time="0.272">
+    <testcase name="responde 403 con mensaje en español" status="pass" classname="04 Flujo del horario (solo local)\11 Coordinador no puede borrar versiones" time="0.272"/>
+  </testsuite>
+</testsuites>

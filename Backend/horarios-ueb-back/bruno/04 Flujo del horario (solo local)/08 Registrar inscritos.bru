@@ -1,0 +1,39 @@
+meta {
+  name: Registrar inscritos
+  type: http
+  seq: 8
+}
+
+put {
+  url: {{baseUrl}}/grupos/{{grupoPrueba}}/inscritos
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{tokenCoordinador}}
+}
+
+body:json {
+  {
+    "inscritos": 30
+  }
+}
+
+script:pre-request {
+  // escribe datos: solo se ejecuta contra el backend local (perfil H2), nunca contra producción
+  if (bru.getEnvName() !== 'local') {
+    bru.runner.skipRequest();
+  }
+}
+
+tests {
+  test("guarda los inscritos del grupo", function () {
+    expect(res.status).to.equal(200);
+    expect(res.body.valor.inscritos).to.equal(30);
+  });
+}
+
+docs {
+  TC-30
+}

@@ -1,0 +1,887 @@
+{
+  "casos": [
+    {
+      "id": "TC-01",
+      "titulo": "Salud del servicio y conexión a la base de datos",
+      "hu": "HDC-62",
+      "rf": "RNF-07",
+      "tipo": "Integración",
+      "tecnica": "Prueba de humo",
+      "herramienta": "Bruno",
+      "prioridad": "Alta",
+      "responsable": "Hernando",
+      "precondicion": "Backend desplegado (local o Render).",
+      "pasos": [
+        "GET /api/salud"
+      ],
+      "esperado": "HTTP 200 con {\"estado\":\"ok\"} en menos de 3 s con el servidor despierto.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-02",
+      "titulo": "Inicio de sesión con credenciales válidas para cada rol",
+      "hu": "HDC-22",
+      "rf": "RF-15",
+      "tipo": "Funcional",
+      "tecnica": "Partición de equivalencia (clase válida)",
+      "herramienta": "Bruno + manual",
+      "prioridad": "Crítica",
+      "responsable": "Hernando",
+      "precondicion": "Usuarios semilla activos.",
+      "pasos": [
+        "POST /api/auth/login con el correo y la clave de coordinación, comité, docente y administración",
+        "Repetir desde https://horarios-ueb-sistema.vercel.app"
+      ],
+      "esperado": "HTTP 200 con un token JWT de tres partes; la respuesta no contiene la contraseña ni su hash; el front entra a la pantalla inicial del rol.",
+      "ciclo1": "FAIL",
+      "ciclo2": "PASS",
+      "bug": "BUG-01"
+    },
+    {
+      "id": "TC-03",
+      "titulo": "Inicio de sesión con credenciales inválidas",
+      "hu": "HDC-22",
+      "rf": "RF-15",
+      "tipo": "Funcional",
+      "tecnica": "Partición de equivalencia (clase inválida)",
+      "herramienta": "Bruno",
+      "prioridad": "Alta",
+      "responsable": "Hernando",
+      "precondicion": "Ninguna.",
+      "pasos": [
+        "POST /api/auth/login con un correo inexistente y una clave cualquiera"
+      ],
+      "esperado": "HTTP 401 con «Correo o contraseña incorrectos.» (no revela si el correo existe).",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-04",
+      "titulo": "Intento de inyección SQL en el inicio de sesión",
+      "hu": "HDC-22",
+      "rf": "RNF-06",
+      "tipo": "Seguridad",
+      "tecnica": "Pruebas de seguridad OWASP (A03 Inyección)",
+      "herramienta": "Bruno",
+      "prioridad": "Crítica",
+      "responsable": "Hernando",
+      "precondicion": "Ninguna.",
+      "pasos": [
+        "POST /api/auth/login con correo \"' OR '1'='1' --\" y clave \"' OR '1'='1\""
+      ],
+      "esperado": "HTTP 401; sin error 500 ni datos en la respuesta.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-05",
+      "titulo": "Acceso sin token o con un token alterado",
+      "hu": "HDC-22",
+      "rf": "RNF-06",
+      "tipo": "Seguridad",
+      "tecnica": "Pruebas de seguridad OWASP (A01/A07)",
+      "herramienta": "Bruno",
+      "prioridad": "Crítica",
+      "responsable": "Hernando",
+      "precondicion": "Token válido del coordinador.",
+      "pasos": [
+        "GET /api/estado sin cabecera Authorization",
+        "GET /api/estado con el token modificado en su firma"
+      ],
+      "esperado": "HTTP 401 en ambos casos.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-06",
+      "titulo": "Permisos por rol aplicados en el servidor",
+      "hu": "HDC-22",
+      "rf": "RF-15",
+      "tipo": "Seguridad",
+      "tecnica": "Tabla de decisión (rol × operación)",
+      "herramienta": "Bruno",
+      "prioridad": "Crítica",
+      "responsable": "Hernando",
+      "precondicion": "Tokens de comité y docente.",
+      "pasos": [
+        "El comité llama POST /periodos/{id}/generar",
+        "El docente llama GET /usuarios"
+      ],
+      "esperado": "HTTP 403 y registro «Acción rechazada por permisos» en la bitácora.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-07",
+      "titulo": "El docente solo recibe su propio horario publicado",
+      "hu": "HDC-75",
+      "rf": "RF-19",
+      "tipo": "Seguridad",
+      "tecnica": "Tabla de decisión (rol × datos visibles)",
+      "herramienta": "Bruno",
+      "prioridad": "Alta",
+      "responsable": "Hernando",
+      "precondicion": "Horario 2026-1 publicado.",
+      "pasos": [
+        "Iniciar sesión como docente",
+        "GET /api/estado?periodo=per-2026-1"
+      ],
+      "esperado": "Un solo docente (él mismo), solo versiones publicadas, solo sus sesiones, sin usuarios ni observaciones.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-08",
+      "titulo": "Administración de usuarios sin exponer contraseñas",
+      "hu": "HDC-69",
+      "rf": "RF-22",
+      "tipo": "Funcional",
+      "tecnica": "Partición de equivalencia",
+      "herramienta": "Bruno + manual",
+      "prioridad": "Alta",
+      "responsable": "Hernando",
+      "precondicion": "Token del administrador.",
+      "pasos": [
+        "GET /api/usuarios",
+        "En la pantalla Usuarios desactivar un usuario e intentar iniciar sesión con él"
+      ],
+      "esperado": "Lista de 59 usuarios sin hash; el usuario desactivado recibe «El usuario está desactivado».",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-09",
+      "titulo": "Política de contraseñas al cambiar la clave",
+      "hu": "HDC-69",
+      "rf": "RNF-06",
+      "tipo": "Seguridad",
+      "tecnica": "Valores límite (longitud 7/8)",
+      "herramienta": "Bruno + manual",
+      "prioridad": "Media",
+      "responsable": "Hernando",
+      "precondicion": "Sesión iniciada.",
+      "pasos": [
+        "POST /api/auth/cambiar-clave con la nueva clave «abc»",
+        "En Mi cuenta cambiar a una clave válida de 8 caracteres con letra y número"
+      ],
+      "esperado": "La clave «abc» se rechaza (HTTP 422) indicando qué le falta; la válida se acepta.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-10",
+      "titulo": "Parámetros del periodo inválidos",
+      "hu": "HDC-7",
+      "rf": "RF-01",
+      "tipo": "Funcional",
+      "tecnica": "Valores límite (inicio ≥ fin)",
+      "herramienta": "Bruno",
+      "prioridad": "Alta",
+      "responsable": "Hernando",
+      "precondicion": "Periodo 2026-2 abierto.",
+      "pasos": [
+        "PUT /periodos/per-2026-2/parametros con franja de lunes a viernes 22:00–07:00"
+      ],
+      "esperado": "HTTP 422 «La franja de lunes a viernes no es válida.»; el periodo no cambia.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-11",
+      "titulo": "Cupo de grupo por encima del cupo efectivo (R9)",
+      "hu": "HDC-8",
+      "rf": "RF-02",
+      "tipo": "Funcional",
+      "tecnica": "Valores límite (44 válido / 45 inválido)",
+      "herramienta": "Bruno",
+      "prioridad": "Alta",
+      "responsable": "Hernando",
+      "precondicion": "Cupo máximo 40 y tolerancia 10 %.",
+      "pasos": [
+        "PUT /grupos/{id} con cupo 45"
+      ],
+      "esperado": "HTTP 422 que cita R9 y el cupo efectivo de 44.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-12",
+      "titulo": "Registro de docente sin vinculación",
+      "hu": "HDC-10",
+      "rf": "RF-03",
+      "tipo": "Funcional",
+      "tecnica": "Partición de equivalencia (campo obligatorio vacío)",
+      "herramienta": "Bruno",
+      "prioridad": "Media",
+      "responsable": "Hernando",
+      "precondicion": "Token del coordinador.",
+      "pasos": [
+        "PUT /docentes/{id} sin tipo de vinculación"
+      ],
+      "esperado": "HTTP 422 «Seleccione el tipo de vinculación.»",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-13",
+      "titulo": "Disponibilidad editable solo por el coordinador o el propio docente",
+      "hu": "HDC-11",
+      "rf": "RF-04",
+      "tipo": "Seguridad",
+      "tecnica": "Tabla de decisión",
+      "herramienta": "Bruno",
+      "prioridad": "Alta",
+      "responsable": "Hernando",
+      "precondicion": "Token de un docente.",
+      "pasos": [
+        "PUT /docentes/doc-05/disponibilidad con el token de otro docente"
+      ],
+      "esperado": "HTTP 403.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-14",
+      "titulo": "Curso con sesiones semanales fuera de rango",
+      "hu": "HDC-12",
+      "rf": "RF-05",
+      "tipo": "Funcional",
+      "tecnica": "Valores límite (1–4)",
+      "herramienta": "Bruno",
+      "prioridad": "Media",
+      "responsable": "Hernando",
+      "precondicion": "Token del coordinador.",
+      "pasos": [
+        "PUT /cursos/cur-isi-101 con 9 sesiones semanales"
+      ],
+      "esperado": "HTTP 422 indicando el rango permitido.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-15",
+      "titulo": "Aula con capacidad inválida",
+      "hu": "HDC-13",
+      "rf": "RF-06",
+      "tipo": "Funcional",
+      "tecnica": "Valores límite (capacidad 0)",
+      "herramienta": "Bruno",
+      "prioridad": "Media",
+      "responsable": "Hernando",
+      "precondicion": "Token del coordinador.",
+      "pasos": [
+        "PUT /aulas/aula-a-201 con capacidad 0"
+      ],
+      "esperado": "HTTP 422; el aula conserva su capacidad.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-16",
+      "titulo": "Creación de un periodo que ya existe",
+      "hu": "HDC-70",
+      "rf": "RF-16",
+      "tipo": "Funcional",
+      "tecnica": "Partición de equivalencia",
+      "herramienta": "Bruno",
+      "prioridad": "Media",
+      "responsable": "Hernando",
+      "precondicion": "Existe 2026-2.",
+      "pasos": [
+        "POST /periodos con año 2026 y semestre 2"
+      ],
+      "esperado": "HTTP 422 «El periodo 2026-2 ya existe.»",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-17",
+      "titulo": "Importación CSV todo o nada",
+      "hu": "HDC-71",
+      "rf": "RF-17",
+      "tipo": "Funcional",
+      "tecnica": "Tabla de decisión (filas válidas + inválidas)",
+      "herramienta": "Bruno + manual",
+      "prioridad": "Alta",
+      "responsable": "Hernando",
+      "precondicion": "Archivos de Extras/muestras-csv.",
+      "pasos": [
+        "POST /periodos/{id}/importacion con un aula válida y otra con capacidad negativa",
+        "En Importar datos cargar cursos_plan_50_con_errores.csv"
+      ],
+      "esperado": "No se carga ninguna fila y se listan los errores con su fila.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-18",
+      "titulo": "Número de grupos validado contra el cupo efectivo",
+      "hu": "HDC-84",
+      "rf": "RF-18",
+      "tipo": "Funcional",
+      "tecnica": "Valores límite (demanda ÷ grupos)",
+      "herramienta": "Bruno",
+      "prioridad": "Media",
+      "responsable": "Hernando",
+      "precondicion": "Demanda de Matemáticas básicas registrada.",
+      "pasos": [
+        "POST /periodos/{id}/cursos/cur-isi-101/numero-grupos con 1 grupo"
+      ],
+      "esperado": "HTTP 422 que explica el cupo efectivo (R9).",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-19",
+      "titulo": "Generación de la propuesta del periodo",
+      "hu": "HDC-16",
+      "rf": "RF-08",
+      "tipo": "Funcional",
+      "tecnica": "Caso de uso (flujo principal)",
+      "herramienta": "Bruno + JUnit",
+      "prioridad": "Crítica",
+      "responsable": "Juanita",
+      "precondicion": "Periodo 2026-2 con 161 grupos.",
+      "pasos": [
+        "POST /periodos/per-2026-2/generar"
+      ],
+      "esperado": "Versión en borrador con más de 250 sesiones, 0 pendientes y 0 violaciones en menos de 60 s (RNF-01).",
+      "ciclo1": "FAIL",
+      "ciclo2": "PASS",
+      "bug": "BUG-09"
+    },
+    {
+      "id": "TC-20",
+      "titulo": "Motor de reglas: cada regla rechaza y se nombra",
+      "hu": "HDC-15",
+      "rf": "RF-09",
+      "tipo": "Unitaria",
+      "tecnica": "Caja blanca (una prueba por regla)",
+      "herramienta": "JUnit",
+      "prioridad": "Crítica",
+      "responsable": "Santiago",
+      "precondicion": "Horario 2026-1 sembrado.",
+      "pasos": [
+        "Validar asignaciones que violan R1, R3 y R4 y la versión completa"
+      ],
+      "esperado": "Cada violación trae el código de su regla; la versión publicada tiene 0 violaciones.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-21",
+      "titulo": "Arrastrar una sesión al almuerzo (R3)",
+      "hu": "HDC-17",
+      "rf": "RF-10",
+      "tipo": "Funcional",
+      "tecnica": "Partición de equivalencia (franja prohibida)",
+      "herramienta": "Bruno + manual",
+      "prioridad": "Alta",
+      "responsable": "Hernando",
+      "precondicion": "Versión en borrador.",
+      "pasos": [
+        "En el tablero arrastrar una sesión a las 13:00",
+        "PATCH /versiones/{v}/sesiones/{s} con inicio 13"
+      ],
+      "esperado": "Rechazo inmediato que nombra R3; la sesión vuelve a su lugar.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-22",
+      "titulo": "Movimiento válido en el tablero",
+      "hu": "HDC-17",
+      "rf": "RF-10",
+      "tipo": "Funcional",
+      "tecnica": "Partición de equivalencia (franja válida)",
+      "herramienta": "Bruno + manual",
+      "prioridad": "Alta",
+      "responsable": "Hernando",
+      "precondicion": "Versión en borrador.",
+      "pasos": [
+        "Arrastrar una sesión a una franja libre",
+        "PATCH con día y hora válidos"
+      ],
+      "esperado": "El cambio se ve al instante, se guarda en el servidor (< 2 s) y queda en la bitácora.",
+      "ciclo1": "FAIL",
+      "ciclo2": "PASS",
+      "bug": "BUG-07"
+    },
+    {
+      "id": "TC-23",
+      "titulo": "Panel de restricciones blandas B1–B6",
+      "hu": "HDC-18",
+      "rf": "RF-11",
+      "tipo": "Funcional",
+      "tecnica": "Exploratoria guiada",
+      "herramienta": "Manual",
+      "prioridad": "Media",
+      "responsable": "Hernando",
+      "precondicion": "Versión generada.",
+      "pasos": [
+        "Tablero → Restricciones blandas"
+      ],
+      "esperado": "Lista agrupada por regla; no bloquea la publicación.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-24",
+      "titulo": "Publicación de la versión",
+      "hu": "HDC-19",
+      "rf": "RF-12",
+      "tipo": "Funcional",
+      "tecnica": "Transición de estados (borrador → publicada)",
+      "herramienta": "Bruno",
+      "prioridad": "Crítica",
+      "responsable": "Hernando",
+      "precondicion": "Versión sin pendientes con concepto del comité.",
+      "pasos": [
+        "POST /versiones/{v}/publicar",
+        "Repetir sobre la misma versión"
+      ],
+      "esperado": "La primera vez queda PUBLICADA; la segunda se bloquea porque solo se publica el borrador.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-25",
+      "titulo": "Restaurar una versión como borrador",
+      "hu": "HDC-83",
+      "rf": "RF-12",
+      "tipo": "Funcional",
+      "tecnica": "Transición de estados",
+      "herramienta": "Bruno",
+      "prioridad": "Media",
+      "responsable": "Hernando",
+      "precondicion": "Versión publicada.",
+      "pasos": [
+        "POST /versiones/{v}/restaurar"
+      ],
+      "esperado": "Nueva versión en BORRADOR; la publicada no cambia.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-26",
+      "titulo": "Concepto del comité sobre una versión",
+      "hu": "HDC-82",
+      "rf": "RF-20",
+      "tipo": "Funcional",
+      "tecnica": "Caso de uso",
+      "herramienta": "Bruno",
+      "prioridad": "Media",
+      "responsable": "Hernando",
+      "precondicion": "Token del comité.",
+      "pasos": [
+        "POST /versiones/{v}/observaciones con concepto FAVORABLE"
+      ],
+      "esperado": "Observación guardada con autor y fecha, visible para el coordinador.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-27",
+      "titulo": "Exportar el horario en CSV y PDF",
+      "hu": "HDC-20",
+      "rf": "RF-13",
+      "tipo": "Funcional",
+      "tecnica": "Caso de uso",
+      "herramienta": "Manual",
+      "prioridad": "Media",
+      "responsable": "Hernando",
+      "precondicion": "Horario publicado.",
+      "pasos": [
+        "Consultar horario → CSV completo",
+        "Consultar horario → PDF"
+      ],
+      "esperado": "CSV con una fila por sesión y PDF imprimible en horizontal.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-28",
+      "titulo": "Reportes de ocupación de aulas y carga docente",
+      "hu": "HDC-21",
+      "rf": "RF-14",
+      "tipo": "Funcional",
+      "tecnica": "Exploratoria guiada",
+      "herramienta": "Manual",
+      "prioridad": "Media",
+      "responsable": "Hernando",
+      "precondicion": "Versión generada.",
+      "pasos": [
+        "Menú Reportes"
+      ],
+      "esperado": "Ocupación por franja, carga vs. máximo y grupos bajo el mínimo.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-29",
+      "titulo": "Consulta del horario por docente, aula, curso y semestre",
+      "hu": "HDC-74",
+      "rf": "RF-19",
+      "tipo": "Funcional",
+      "tecnica": "Partición de equivalencia (4 filtros)",
+      "herramienta": "Bruno + manual",
+      "prioridad": "Alta",
+      "responsable": "Hernando",
+      "precondicion": "Horario 2026-1 publicado.",
+      "pasos": [
+        "GET /api/versiones/{publicada} como comité",
+        "Consultar horario con cada filtro"
+      ],
+      "esperado": "El horario publicado carga sin pendientes y ningún grupo tiene dos sesiones el mismo día.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-30",
+      "titulo": "Registro de inscritos por grupo",
+      "hu": "HDC-76",
+      "rf": "RF-21",
+      "tipo": "Funcional",
+      "tecnica": "Valores límite (inscritos ≥ 0)",
+      "herramienta": "Bruno",
+      "prioridad": "Media",
+      "responsable": "Hernando",
+      "precondicion": "Grupo abierto.",
+      "pasos": [
+        "PUT /grupos/{g}/inscritos con 30"
+      ],
+      "esperado": "Inscritos guardados.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-31",
+      "titulo": "Cierre de grupos por debajo del mínimo",
+      "hu": "HDC-77",
+      "rf": "RF-21",
+      "tipo": "Funcional",
+      "tecnica": "Valores límite (mínimo 10)",
+      "herramienta": "Bruno + manual",
+      "prioridad": "Media",
+      "responsable": "Hernando",
+      "precondicion": "Grupo con 30 inscritos y otro con 8.",
+      "pasos": [
+        "POST /grupos/{g}/cerrar con 30 inscritos",
+        "Cerrar el de 8 desde Inscritos y cierre"
+      ],
+      "esperado": "El de 30 se rechaza; el de 8 se cierra y libera docente y aula.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-32",
+      "titulo": "Bitácora de auditoría",
+      "hu": "HDC-78",
+      "rf": "RF-15",
+      "tipo": "Seguridad",
+      "tecnica": "Tabla de decisión (rol × acceso)",
+      "herramienta": "Bruno",
+      "prioridad": "Alta",
+      "responsable": "Hernando",
+      "precondicion": "Acciones previas registradas.",
+      "pasos": [
+        "GET /api/bitacora como coordinador",
+        "GET /api/bitacora como docente"
+      ],
+      "esperado": "El coordinador ve usuario, rol, acción, detalle y fecha (incluido el intento rechazado); el docente recibe 403.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-33",
+      "titulo": "Horario de atención de 1 o 2 horas",
+      "hu": "HDC-86",
+      "rf": "RF-23",
+      "tipo": "Funcional",
+      "tecnica": "Valores límite (1, 2 y 3 horas)",
+      "herramienta": "Bruno + manual",
+      "prioridad": "Media",
+      "responsable": "Hernando",
+      "precondicion": "Docente con materias en 2026-2.",
+      "pasos": [
+        "PUT /api/atencion con 3 horas",
+        "En Mi disponibilidad registrar 1 hora el viernes"
+      ],
+      "esperado": "Las 3 horas se rechazan con su motivo; 1 hora se guarda.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-34",
+      "titulo": "Calidad del horario generado: sábado, viernes y aulas",
+      "hu": "HDC-16",
+      "rf": "RF-08",
+      "tipo": "Funcional",
+      "tecnica": "Caja blanca (propiedades del resultado)",
+      "herramienta": "JUnit",
+      "prioridad": "Alta",
+      "responsable": "Juanita",
+      "precondicion": "Datos semilla de 2026-2.",
+      "pasos": [
+        "Generar el horario y medir: sesiones diurnas en sábado, carga del viernes, aulas sin uso y aulas especiales mal usadas"
+      ],
+      "esperado": "≤ 3 sesiones diurnas el sábado, viernes ≥ 85 % del promedio, 86/86 aulas con uso y 0 aulas especiales mal usadas (B5).",
+      "ciclo1": "FAIL",
+      "ciclo2": "PASS",
+      "bug": "BUG-04"
+    },
+    {
+      "id": "TC-35",
+      "titulo": "Carga concurrente sobre la API",
+      "hu": "HDC-55",
+      "rf": "RNF-01",
+      "tipo": "Rendimiento",
+      "tecnica": "Prueba de carga",
+      "herramienta": "Script Node (carga.mjs)",
+      "prioridad": "Alta",
+      "responsable": "Juanita",
+      "precondicion": "Backend con datos semilla.",
+      "pasos": [
+        "node carga.mjs URL 300 25 (300 consultas de /estado, 25 simultáneas)"
+      ],
+      "esperado": "0 errores y p95 < 2000 ms.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-36",
+      "titulo": "Retroalimentación durante esperas (usabilidad)",
+      "hu": "HDC-55",
+      "rf": "RNF-02",
+      "tipo": "Usabilidad",
+      "tecnica": "Heurísticas de Nielsen (visibilidad del estado del sistema)",
+      "herramienta": "Manual",
+      "prioridad": "Media",
+      "responsable": "Laura",
+      "precondicion": "Servidor de Render dormido.",
+      "pasos": [
+        "Abrir el portal",
+        "Iniciar sesión",
+        "Publicar una versión"
+      ],
+      "esperado": "Pantalla de carga con el logo y mensajes de avance; barra y aviso «Procesando su solicitud…» en operaciones largas; botones bloqueados contra doble clic.",
+      "ciclo1": "FAIL",
+      "ciclo2": "PASS",
+      "bug": "BUG-08"
+    },
+    {
+      "id": "TC-37",
+      "titulo": "Borrado de versiones de prueba por el administrador",
+      "hu": "HDC-19",
+      "rf": "RF-12",
+      "tipo": "Funcional",
+      "tecnica": "Tabla de decisión (rol × acción)",
+      "herramienta": "Bruno",
+      "prioridad": "Media",
+      "responsable": "Hernando",
+      "precondicion": "Versiones de prueba en 2026-2.",
+      "pasos": [
+        "DELETE /periodos/{id}/versiones como administrador",
+        "Repetir como coordinador"
+      ],
+      "esperado": "El administrador las borra; el coordinador recibe 403.",
+      "ciclo1": "PASS",
+      "ciclo2": "PASS",
+      "bug": null
+    },
+    {
+      "id": "TC-38",
+      "titulo": "Generación con el juego de datos representativo del Programa",
+      "hu": "HDC-56",
+      "rf": "RF-08",
+      "tipo": "Aceptación",
+      "tecnica": "Datos representativos (plan real, 55 docentes, 86 aulas)",
+      "herramienta": "JUnit + revisión del coordinador",
+      "prioridad": "Crítica",
+      "responsable": "Juanita",
+      "precondicion": "Plan de estudios oficial y datos semilla de 2026-1 y 2026-2.",
+      "pasos": [
+        "Generar 2026-1 y 2026-2",
+        "Revisar con el plan: sesiones por curso y tipo de aula"
+      ],
+      "esperado": "Ambos periodos sin pendientes ni violaciones; cada curso con sus sesiones y el tipo de aula que exige.",
+      "ciclo1": "FAIL",
+      "ciclo2": "PASS",
+      "bug": "BUG-02"
+    }
+  ],
+  "bugs": [
+    {
+      "id": "BUG-01",
+      "titulo": "En producción el inicio de sesión muestra «No hay conexión con el servidor»",
+      "severidad": "Crítica",
+      "prioridad": "Alta",
+      "tipo": "Configuración / despliegue",
+      "hu": "HDC-22",
+      "tc": "TC-02",
+      "estado": "Cerrado",
+      "responsable": "Santiago",
+      "descripcion": "Desde https://horarios-ueb-sistema.vercel.app ningún usuario podía iniciar sesión: el login respondía «No hay conexión con el servidor».",
+      "causa": "El front de producción llamaba a horarios-ueb-back.onrender.com, pero el servicio de Render quedó publicado como horarios-ueb-sistema.onrender.com (la CSP de Vercel también apuntaba a la URL equivocada).",
+      "correccion": "Se corrigió la URL en environment.production.ts y en connect-src de vercel.json; se verificó /api/salud y el login contra el backend real."
+    },
+    {
+      "id": "BUG-02",
+      "titulo": "Cursos que usan software programados en salones sin computadores",
+      "severidad": "Alta",
+      "prioridad": "Alta",
+      "tipo": "Datos",
+      "hu": "HDC-12",
+      "tc": "TC-38",
+      "estado": "Cerrado",
+      "responsable": "Santiago",
+      "descripcion": "Sistemas digitales y arquitectura de computador, Dinámica de sistemas y Modelos y simulación quedaban en salones estándar.",
+      "causa": "Los datos semilla no marcaban esos cursos con la característica «Equipos de cómputo».",
+      "correccion": "Migración V4: los tres cursos pasan a sala de cómputo, su cupo se ajusta a 35 y se regeneró el horario 2026-1."
+    },
+    {
+      "id": "BUG-03",
+      "titulo": "Fundamentos de programación con 2 sesiones semanales en lugar de 3",
+      "severidad": "Alta",
+      "prioridad": "Alta",
+      "tipo": "Datos",
+      "hu": "HDC-12",
+      "tc": "TC-38",
+      "estado": "Cerrado",
+      "responsable": "Santiago",
+      "descripcion": "El curso de primer semestre se programaba dos veces por semana.",
+      "causa": "La regla de sesiones por créditos (3 créditos → 2 sesiones) no aplica a este curso.",
+      "correccion": "Se fijaron 3 sesiones semanales para Fundamentos de programación en los datos semilla."
+    },
+    {
+      "id": "BUG-04",
+      "titulo": "Grupos diurnos con clases el sábado",
+      "severidad": "Media",
+      "prioridad": "Media",
+      "tipo": "Funcional (algoritmo)",
+      "hu": "HDC-16",
+      "tc": "TC-34",
+      "estado": "Cerrado",
+      "responsable": "Santiago",
+      "descripcion": "El generador ubicaba grupos de la jornada diurna el sábado aunque había franjas libres entre semana.",
+      "causa": "El costo del sábado diurno (12) era menor que el de un cruce del semestre, así que el algoritmo lo prefería.",
+      "correccion": "El sábado diurno pasó a ser último recurso (costo 80) y la búsqueda sesión por sesión lo deja para la última pasada."
+    },
+    {
+      "id": "BUG-05",
+      "titulo": "Ocupación de aulas desbalanceada",
+      "severidad": "Media",
+      "prioridad": "Media",
+      "tipo": "Funcional (algoritmo)",
+      "hu": "HDC-16",
+      "tc": "TC-34",
+      "estado": "Cerrado",
+      "responsable": "Santiago",
+      "descripcion": "Unas aulas quedaban al 61–79 % y muchas al 0 %.",
+      "causa": "El generador tomaba siempre la primera aula libre de la lista.",
+      "correccion": "Las aulas se eligen entre las menos usadas de su tipo; ahora las 86 tienen clases y ningún curso usa un aula especial que no necesita."
+    },
+    {
+      "id": "BUG-06",
+      "titulo": "Viernes con muy poca carga académica",
+      "severidad": "Media",
+      "prioridad": "Media",
+      "tipo": "Funcional (algoritmo)",
+      "hu": "HDC-16",
+      "tc": "TC-34",
+      "estado": "Cerrado",
+      "responsable": "Santiago",
+      "descripcion": "El horario dejaba los viernes casi vacíos.",
+      "causa": "Solo L-X y M-J se consideraban patrones habituales para cursos de dos sesiones.",
+      "correccion": "Se agregaron X-V, L-J y M-V y un término de balance de la semana en el costo de cada patrón."
+    },
+    {
+      "id": "BUG-07",
+      "titulo": "El tablero tarda en confirmar el arrastre de una sesión",
+      "severidad": "Media",
+      "prioridad": "Media",
+      "tipo": "Rendimiento",
+      "hu": "HDC-17",
+      "tc": "TC-22",
+      "estado": "Cerrado",
+      "responsable": "Santiago",
+      "descripcion": "En producción, cada movimiento tardaba 1–2 s en verse aplicado.",
+      "causa": "El front esperaba la respuesta del servidor (plan gratuito de Render, 0,1 CPU) y este devolvía la versión completa.",
+      "correccion": "Actualización optimista: el cambio se ve al instante y el servidor lo confirma en segundo plano; el endpoint devuelve solo la sesión."
+    },
+    {
+      "id": "BUG-08",
+      "titulo": "Sin indicación de carga durante operaciones largas",
+      "severidad": "Baja",
+      "prioridad": "Media",
+      "tipo": "Usabilidad",
+      "hu": "HDC-22",
+      "tc": "TC-36",
+      "estado": "Cerrado",
+      "responsable": "Laura",
+      "descripcion": "Con el servidor dormido el login parecía congelado; al publicar no se sabía si la solicitud se había enviado.",
+      "causa": "No había retroalimentación visual mientras se esperaba la respuesta.",
+      "correccion": "Pantalla de carga institucional, barra de progreso global, aviso «Procesando su solicitud…» y botones bloqueados mientras hay peticiones en curso."
+    },
+    {
+      "id": "BUG-09",
+      "titulo": "Estructuras de datos quedaba pendiente por falta de horas docentes (R7)",
+      "severidad": "Alta",
+      "prioridad": "Alta",
+      "tipo": "Datos",
+      "hu": "HDC-16",
+      "tc": "TC-19",
+      "estado": "Cerrado",
+      "responsable": "Santiago",
+      "descripcion": "Al generar 2026-2, los grupos diurnos G1 y G2 de Estructuras de datos quedaban sin ubicar.",
+      "causa": "Con Fundamentos en 3 sesiones, los docentes de programación agotaban sus horas máximas.",
+      "correccion": "Se habilitaron más docentes para el curso y Felipe Castañeda pasó a tiempo completo: 0 pendientes."
+    },
+    {
+      "id": "BUG-10",
+      "titulo": "Latencia entre el backend (Virginia) y la base de datos (San Francisco)",
+      "severidad": "Baja",
+      "prioridad": "Baja",
+      "tipo": "Rendimiento / infraestructura",
+      "hu": "HDC-62",
+      "tc": "TC-35",
+      "estado": "Diferido",
+      "responsable": "Santiago",
+      "descripcion": "Cada consulta a la base agrega unos 60–70 ms porque el backend y la base están en regiones distintas.",
+      "causa": "El plan gratuito de Aiven no permite elegir región; el servicio de Render quedó en Virginia.",
+      "correccion": "Diferido: se mitiga con la actualización optimista del tablero; la solución es recrear el servicio de Render en Oregon."
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+meta {
+  name: Concepto del comite
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/versiones/{{versionGenerada}}/observaciones
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{tokenComite}}
+}
+
+body:json {
+  {
+    "concepto": "FAVORABLE",
+    "texto": "Sin cruces en el semestre; aprobado para publicación (prueba automática)."
+  }
+}
+
+script:pre-request {
+  // escribe datos: solo se ejecuta contra el backend local (perfil H2), nunca contra producción
+  if (bru.getEnvName() !== 'local') {
+    bru.runner.skipRequest();
+  }
+}
+
+tests {
+  test("registra la observación con el autor", function () {
+    expect(res.status).to.equal(200);
+    expect(res.body.valor.concepto).to.equal('FAVORABLE');
+  });
+}
+
+docs {
+  TC-26
+}

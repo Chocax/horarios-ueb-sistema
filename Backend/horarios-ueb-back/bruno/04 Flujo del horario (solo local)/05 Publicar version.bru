@@ -1,0 +1,33 @@
+meta {
+  name: Publicar version
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/versiones/{{versionGenerada}}/publicar
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{tokenCoordinador}}
+}
+
+script:pre-request {
+  // escribe datos: solo se ejecuta contra el backend local (perfil H2), nunca contra producción
+  if (bru.getEnvName() !== 'local') {
+    bru.runner.skipRequest();
+  }
+}
+
+tests {
+  test("publica la versión sin violaciones ni pendientes", function () {
+    expect(res.status).to.equal(200);
+    expect(res.body.valor.estado).to.equal('PUBLICADA');
+  });
+}
+
+docs {
+  TC-24
+}

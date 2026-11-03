@@ -1,0 +1,35 @@
+meta {
+  name: Estado del docente
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/estado?periodo={{periodoCerrado}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{tokenDocente}}
+}
+
+tests {
+  test("solo recibe sus propios datos de docente", function () {
+    expect(res.status).to.equal(200);
+    expect(res.body.docentes).to.have.lengthOf(1);
+  });
+  test("solo ve versiones publicadas y solo sus sesiones", function () {
+    const yo = res.body.docentes[0].id;
+    res.body.versiones.forEach(v => expect(v.estado).to.equal('PUBLICADA'));
+    res.body.versiones.forEach(v => v.sesiones.forEach(s => expect(s.docenteId).to.equal(yo)));
+  });
+  test("no recibe observaciones del comité ni usuarios", function () {
+    expect(res.body.observaciones).to.have.lengthOf(0);
+    expect(res.body.usuarios).to.have.lengthOf(0);
+  });
+}
+
+docs {
+  TC-07
+}
