@@ -155,12 +155,12 @@ import { Modal } from '../../shared/modal';
   styles: [
     `
       .mini { width: 76px; padding: 5px 8px; text-align: right; }
-      .chip { font: inherit; font-size: 12.5px; font-weight: 500; border: 1px solid var(--hairline); background: #fff8e6; border-radius: 99px; padding: 3px 10px; cursor: pointer; }
-      .chip.n { background: #e8eefc; }
-      .chip.mal { background: #fdeeec; border-color: var(--color-coral); color: #8e1a0a; }
+      .chip { font: inherit; font-size: 12.5px; font-weight: 500; border: 1px solid var(--hairline); color: inherit; background: var(--fondo-ambar); border-radius: 99px; padding: 3px 10px; cursor: pointer; }
+      .chip.n { background: var(--fondo-indigo); }
+      .chip.mal { background: var(--fondo-error); border-color: var(--color-coral); color: var(--texto-error); }
       .chip:hover { border-color: var(--color-notion-blue); }
       .chip.pend { border-color: var(--color-coral); border-style: dashed; }
-      .atencion-linea { font-size: 13px; color: var(--ink-80, #333); }
+      .atencion-linea { font-size: 13px; color: var(--ink-90); }
       .ver-horario { display: inline-flex; align-items: center; gap: 4px; font-size: 12.5px; margin-top: 4px; }
       .ficha .datos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 16px; }
       .ficha .datos > div { display: flex; flex-direction: column; }

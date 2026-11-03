@@ -121,7 +121,7 @@ import { Modal } from '../../shared/modal';
       .sec { font-size: 15px; margin: 20px 0 10px; }
       .sec:first-child { margin-top: 0; }
       .per { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; align-items: center; text-align: left; font: inherit; padding: 10px 12px;
-        border-radius: 8px; border: 1px solid var(--hairline); background: #fff; cursor: pointer; }
+        border-radius: 8px; border: 1px solid var(--hairline); color: inherit; background: var(--surface); cursor: pointer; }
       .per .caption { grid-column: 1 / -1; }
       .per.on { border-color: var(--color-notion-blue); background: var(--color-sky-tint); }
     `,

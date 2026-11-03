@@ -88,8 +88,8 @@ interface Fila {
     `
       .intro { margin: 0 0 12px; line-height: 1.5; }
       .filas { display: grid; gap: 10px; }
-      .fila { border: 1px solid var(--hairline); border-radius: 10px; padding: 12px 14px; background: #fff; }
-      .fila.sin { background: var(--surface-muted, #fafaf9); }
+      .fila { border: 1px solid var(--hairline); border-radius: 10px; padding: 12px 14px; background: var(--surface); }
+      .fila.sin { background: var(--surface-2); }
       .cab { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
       .controles { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
       .controles .field { min-width: 110px; }

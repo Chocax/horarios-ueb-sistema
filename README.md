@@ -16,6 +16,7 @@
 <p align="center">
   <a href="https://horarios-ueb-sistema.vercel.app"><b>Abrir la aplicación</b></a> ·
   <a href="#recorrido-por-la-aplicación">Capturas</a> ·
+  <a href="#modo-oscuro-y-celular">Modo oscuro</a> ·
   <a href="#cómo-funciona">Cómo funciona</a> ·
   <a href="#el-algoritmo-voraz">Algoritmo voraz</a> ·
   <a href="#pruebas">Pruebas</a> ·
@@ -40,28 +41,30 @@ encima del almuerzo) aparecen cuando el horario ya está publicado.
 
 ## Recorrido por la aplicación
 
+Las capturas alternan el **modo claro** y el **modo oscuro**; los dos tienen las mismas pantallas y funciones.
+
 ### Coordinación
 
 <table>
   <tr>
-    <td width="50%"><img src="Docs/img/app/inicio.jpg" alt="Inicio"><br><b>Inicio.</b> Estado del periodo, plan de estudios y el flujo de la planeación a la publicación.</td>
-    <td width="50%"><img src="Docs/img/app/tablero.jpg" alt="Tablero"><br><b>Tablero del horario.</b> Arrastrar y soltar con validación R1–R9 en el servidor; 0 pendientes y 0 violaciones.</td>
+    <td width="50%"><img src="Docs/img/app/inicio.jpg" alt="Inicio"><br><b>Inicio.</b> <sub>· modo claro</sub> Estado del periodo, plan de estudios y el flujo de la planeación a la publicación.</td>
+    <td width="50%"><img src="Docs/img/app/tablero.jpg" alt="Tablero"><br><b>Tablero del horario.</b> <sub>· modo oscuro</sub> Arrastrar y soltar con validación R1–R9 en el servidor; 0 pendientes y 0 violaciones.</td>
   </tr>
   <tr>
-    <td><img src="Docs/img/app/versiones.jpg" alt="Versiones"><br><b>Versiones y publicación.</b> La publicación se bloquea si hay pendientes o violaciones.</td>
-    <td><img src="Docs/img/app/grupos.jpg" alt="Grupos"><br><b>Grupos y demanda.</b> Sugiere el número de grupos con el cupo efectivo (40 + 10 %).</td>
+    <td><img src="Docs/img/app/versiones.jpg" alt="Versiones"><br><b>Versiones y publicación.</b> <sub>· modo claro</sub> La publicación se bloquea si hay pendientes o violaciones.</td>
+    <td><img src="Docs/img/app/grupos.jpg" alt="Grupos"><br><b>Grupos y demanda.</b> <sub>· modo oscuro</sub> Sugiere el número de grupos con el cupo efectivo (40 + 10 %).</td>
   </tr>
   <tr>
-    <td><img src="Docs/img/app/docentes.jpg" alt="Docentes"><br><b>Docentes.</b> Vinculación, horas máximas, cursos habilitados y carga de la versión.</td>
-    <td><img src="Docs/img/app/aulas.jpg" alt="Aulas"><br><b>Aulas.</b> 86 aulas por bloque, con capacidad, características y ocupación.</td>
+    <td><img src="Docs/img/app/docentes.jpg" alt="Docentes"><br><b>Docentes.</b> <sub>· modo claro</sub> Vinculación, horas máximas, cursos habilitados y carga de la versión.</td>
+    <td><img src="Docs/img/app/aulas.jpg" alt="Aulas"><br><b>Aulas.</b> <sub>· modo oscuro</sub> 86 aulas por bloque, con capacidad, características y ocupación.</td>
   </tr>
   <tr>
-    <td><img src="Docs/img/app/importar.jpg" alt="Importar"><br><b>Importar datos.</b> CSV todo o nada: si una fila falla, no se carga ninguna.</td>
-    <td><img src="Docs/img/app/reportes.jpg" alt="Reportes"><br><b>Reportes.</b> Ocupación de aulas por franja, carga docente y grupos bajo el mínimo.</td>
+    <td><img src="Docs/img/app/importar.jpg" alt="Importar"><br><b>Importar datos.</b> <sub>· modo claro</sub> CSV todo o nada: si una fila falla, no se carga ninguna.</td>
+    <td><img src="Docs/img/app/reportes.jpg" alt="Reportes"><br><b>Reportes.</b> <sub>· modo oscuro</sub> Ocupación de aulas por franja, carga docente y grupos bajo el mínimo.</td>
   </tr>
   <tr>
-    <td><img src="Docs/img/app/inscritos.jpg" alt="Inscritos"><br><b>Inscritos y cierre.</b> Cierra los grupos con menos de 10 estudiantes y libera docente y aula.</td>
-    <td><img src="Docs/img/app/bitacora.jpg" alt="Bitácora"><br><b>Bitácora.</b> Cada acción, incluidos los intentos rechazados, con usuario, rol y fecha.</td>
+    <td><img src="Docs/img/app/inscritos.jpg" alt="Inscritos"><br><b>Inscritos y cierre.</b> <sub>· modo claro</sub> Cierra los grupos con menos de 10 estudiantes y libera docente y aula.</td>
+    <td><img src="Docs/img/app/bitacora.jpg" alt="Bitácora"><br><b>Bitácora.</b> <sub>· modo oscuro</sub> Cada acción, incluidos los intentos rechazados, con usuario, rol y fecha.</td>
   </tr>
 </table>
 
@@ -69,22 +72,60 @@ encima del almuerzo) aparecen cuando el horario ya está publicado.
 
 <table>
   <tr>
-    <td width="50%"><img src="Docs/img/app/revision.jpg" alt="Revisión"><br><b>Revisión de propuestas.</b> El comité ve la versión y registra su concepto; no puede modificarla.</td>
-    <td width="50%"><img src="Docs/img/app/consulta.jpg" alt="Consulta"><br><b>Consultar horario.</b> Por semestre, docente, aula o curso; exporta a CSV y PDF.</td>
+    <td width="50%"><img src="Docs/img/app/revision.jpg" alt="Revisión"><br><b>Revisión de propuestas.</b> <sub>· modo oscuro</sub> El comité ve la versión y registra su concepto; no puede modificarla.</td>
+    <td width="50%"><img src="Docs/img/app/consulta.jpg" alt="Consulta"><br><b>Consultar horario.</b> <sub>· modo claro</sub> Por semestre, docente, aula o curso; exporta a CSV y PDF.</td>
   </tr>
   <tr>
-    <td><img src="Docs/img/app/mi-horario.jpg" alt="Mi horario"><br><b>Mi horario (docente).</b> Solo sus sesiones publicadas y su horario de atención.</td>
-    <td><img src="Docs/img/app/mi-disponibilidad.jpg" alt="Mi disponibilidad"><br><b>Mi disponibilidad.</b> Marca las horas en que puede dictar y su atención semanal.</td>
+    <td><img src="Docs/img/app/mi-horario.jpg" alt="Mi horario"><br><b>Mi horario (docente).</b> <sub>· modo oscuro</sub> Solo sus sesiones publicadas y su horario de atención.</td>
+    <td><img src="Docs/img/app/mi-disponibilidad.jpg" alt="Mi disponibilidad"><br><b>Mi disponibilidad.</b> <sub>· modo claro</sub> Marca las horas en que puede dictar y su atención semanal.</td>
   </tr>
   <tr>
-    <td><img src="Docs/img/app/usuarios.jpg" alt="Usuarios"><br><b>Usuarios y roles.</b> Alta, cambio de rol y desactivación con efecto inmediato.</td>
-    <td><img src="Docs/img/app/propuestas.jpg" alt="Propuestas"><br><b>Propuestas (administrador).</b> Borra las versiones de prueba como si nunca hubieran existido.</td>
+    <td><img src="Docs/img/app/usuarios.jpg" alt="Usuarios"><br><b>Usuarios y roles.</b> <sub>· modo oscuro</sub> Alta, cambio de rol y desactivación con efecto inmediato.</td>
+    <td><img src="Docs/img/app/propuestas.jpg" alt="Propuestas"><br><b>Propuestas (administrador).</b> <sub>· modo claro</sub> Borra las versiones de prueba como si nunca hubieran existido.</td>
   </tr>
   <tr>
-    <td><img src="Docs/img/app/login.jpg" alt="Inicio de sesión"><br><b>Inicio de sesión</b> con correo institucional.</td>
+    <td><img src="Docs/img/app/login.jpg" alt="Inicio de sesión"><br><b>Inicio de sesión</b> <sub>· modo oscuro</sub> con correo institucional.</td>
     <td><img src="Docs/img/app/pantalla-carga.png" alt="Pantalla de carga"><br><b>Pantalla de carga</b> mientras el servidor gratuito despierta.</td>
   </tr>
 </table>
+
+## Modo oscuro y celular
+
+El botón de la luna (☾) en la barra superior, también visible en la pantalla de inicio de sesión, cambia entre el modo
+claro y el oscuro. El modo oscuro conserva la estructura y los colores de acento (azul, marigold, coral y midnight) y
+solo oscurece el papel, las tarjetas y los tintes de cada curso, para quien prefiere no trabajar sobre fondo blanco.
+
+| Pregunta | Respuesta |
+|---|---|
+| ¿Cuál es el modo por defecto? | **Claro**. |
+| ¿Se recuerda la elección? | Sí: se guarda en el navegador (`localStorage`, clave `ueb-horarios-tema`). Si lo deja en oscuro, la próxima vez que abra el sistema en ese navegador seguirá en oscuro, aunque cierre sesión. |
+| ¿Y en otro navegador o computador? | Arranca en claro: la preferencia es de cada navegador y no se guarda en la cuenta. |
+| ¿La página parpadea en blanco al abrir? | No: [`public/tema.js`](Frontend/horarios-ueb/public/tema.js) aplica el modo guardado antes de que cargue Angular. |
+| ¿Y al imprimir o exportar a PDF? | Siempre sale en claro, para que el horario impreso sea legible. |
+
+En **celular** la barra superior se reorganiza en dos filas (menú y cuenta arriba; periodo y estado abajo), el menú
+lateral se abre con el botón ☰, las cifras se muestran de a dos por fila y las grillas semanales usan columnas más
+angostas para mostrar más días antes de deslizar.
+
+<p align="center">
+  <img src="Docs/img/app/movil-inicio.jpg" alt="Inicio en celular, modo claro" width="22%">
+  <img src="Docs/img/app/movil-tablero.jpg" alt="Tablero en celular, modo oscuro" width="22%">
+  <img src="Docs/img/app/movil-docentes.jpg" alt="Docentes en celular, modo claro" width="22%">
+  <img src="Docs/img/app/movil-mi-horario.jpg" alt="Mi horario en celular, modo oscuro" width="22%">
+  <br><sub>En celular: inicio (claro), tablero (oscuro), docentes (claro) y horario del docente (oscuro).</sub>
+</p>
+
+<details>
+<summary><b>Cómo está implementado</b></summary>
+
+- [`styles.scss`](Frontend/horarios-ueb/src/styles.scss) define los colores como variables CSS (`--surface`, `--ink-95`,
+  `--curso-1`…). El bloque `:root[data-theme='dark']` las redefine y los componentes usan esas variables en lugar de colores fijos.
+- [`TemaService`](Frontend/horarios-ueb/src/app/core/services/tema.service.ts) guarda la elección y pone o quita el
+  atributo `data-theme="dark"` en `<html>`; [`BotonTema`](Frontend/horarios-ueb/src/app/shared/boton-tema.ts) es el botón.
+- `tema.js` es un archivo aparte (no un script en línea) porque la política de seguridad de contenido (CSP) del sitio
+  solo permite scripts del propio dominio.
+
+</details>
 
 ## Cómo funciona
 

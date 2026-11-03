@@ -6,14 +6,16 @@ import { ApiService } from '../../core/services/api.service';
 import { SessionService } from '../../core/services/session.service';
 import { StoreService } from '../../core/services/store.service';
 import { RUTA_INICIAL } from '../../layout/nav';
+import { BotonTema } from '../../shared/boton-tema';
 import { PantallaCarga } from '../../shared/pantalla-carga';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, PantallaCarga],
+  imports: [FormsModule, PantallaCarga, BotonTema],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (conectando()) { <app-pantalla-carga /> }
+    <app-boton-tema class="tema" />
     <div class="wrap">
       <section class="hero">
         <div class="marca-ueb">
@@ -62,6 +64,7 @@ import { PantallaCarga } from '../../shared/pantalla-carga';
   `,
   styles: [
     `
+      .tema { position: absolute; top: 14px; right: 16px; z-index: 5; }
       .wrap { min-height: 100vh; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 48px; align-items: start; max-width: 1280px; margin: 0 auto; padding: 56px 40px 48px; }
       .hero { position: sticky; top: 56px; padding-top: 8px; }
       @media (max-width: 1000px) {

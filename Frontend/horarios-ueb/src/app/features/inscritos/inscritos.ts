@@ -76,7 +76,7 @@ import { Modal } from '../../shared/modal';
   styles: [
     `
       .mini { width: 90px; padding: 5px 8px; text-align: right; }
-      tr.bajo td { background: #fff6f4; }
+      tr.bajo td { background: var(--fondo-error-suave); }
       tr.cerr td { color: var(--ink-40); }
     `,
   ],
