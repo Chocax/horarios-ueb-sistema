@@ -1,0 +1,23 @@
+meta {
+  name: Estado sin token
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/estado
+  body: none
+  auth: none
+}
+
+tests {
+  test("responde 401 con mensaje en español", function () {
+    expect(res.status).to.equal(401);
+    expect(res.body.ok).to.equal(false);
+    expect(res.body.mensaje).to.be.a('string').and.not.empty;
+  });
+}
+
+docs {
+  TC-05
+}

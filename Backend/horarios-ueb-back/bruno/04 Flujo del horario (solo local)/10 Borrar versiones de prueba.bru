@@ -1,0 +1,33 @@
+meta {
+  name: Borrar versiones de prueba
+  type: http
+  seq: 10
+}
+
+delete {
+  url: {{baseUrl}}/periodos/{{periodoAbierto}}/versiones?incluirPublicada=true
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{tokenAdmin}}
+}
+
+script:pre-request {
+  // escribe datos: solo se ejecuta contra el backend local (perfil H2), nunca contra producción
+  if (bru.getEnvName() !== 'local') {
+    bru.runner.skipRequest();
+  }
+}
+
+tests {
+  test("el administrador borra las versiones creadas por la prueba", function () {
+    expect(res.status).to.equal(200);
+    expect(res.body.mensaje).to.contain('eliminada');
+  });
+}
+
+docs {
+  TC-37
+}

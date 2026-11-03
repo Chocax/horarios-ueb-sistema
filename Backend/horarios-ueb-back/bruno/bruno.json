@@ -1,0 +1,10 @@
+{
+  "version": "1",
+  "name": "Horarios UEB · API",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git",
+    "reportes"
+  ]
+}

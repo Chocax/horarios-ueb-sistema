@@ -1,0 +1,25 @@
+meta {
+  name: Salud del servicio
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/salud
+  body: none
+  auth: none
+}
+
+tests {
+  test("el servicio y la base de datos responden", function () {
+    expect(res.status).to.equal(200);
+    expect(res.body.estado).to.equal('ok');
+  });
+  test("responde en menos de 3 s con el servidor despierto", function () {
+    expect(res.responseTime).to.be.below(3000);
+  });
+}
+
+docs {
+  TC-01 · GET /salud consulta la base de datos (lo usa Render como health check).
+}

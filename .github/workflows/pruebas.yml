@@ -1,0 +1,70 @@
+# Pruebas automáticas en cada push y pull request a develop o main (regresión):
+#   1. Backend: pruebas JUnit (reglas, generador, seguridad) sobre H2 con el esquema y los datos reales (Flyway).
+#   2. API: levanta el backend y ejecuta la colección de Bruno (integración y seguridad).
+#   3. Frontend: compilación de producción.
+# La colección de Bruno necesita el secreto CLAVE_PRUEBAS del repositorio (Settings → Secrets and variables → Actions)
+# con la contraseña inicial de los usuarios semilla.
+name: Pruebas
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+    branches: [develop, main]
+
+jobs:
+  backend:
+    name: Backend (JUnit + Bruno)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Backend/horarios-ueb-back
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Pruebas JUnit
+        run: chmod +x gradlew && ./gradlew test --no-daemon
+      - name: Levantar el backend (perfil local, H2)
+        run: |
+          nohup ./gradlew bootRun --no-daemon > backend.log 2>&1 &
+          for i in $(seq 1 90); do curl -sf http://localhost:8080/api/salud && exit 0; sleep 2; done
+          cat backend.log; exit 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Colección de Bruno
+        working-directory: Backend/horarios-ueb-back/bruno
+        env:
+          CLAVE: ${{ secrets.CLAVE_PRUEBAS }}
+        run: |
+          if [ -z "$CLAVE" ]; then echo "::warning::Falta el secreto CLAVE_PRUEBAS: se omite la colección de Bruno"; exit 0; fi
+          npx --yes @usebruno/cli@4.3.0 run -r --env local --env-var "clave=$CLAVE" --reporter-junit reportes/bruno.xml --reporter-html reportes/bruno.html
+      - name: Guardar reportes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reportes-pruebas
+          path: |
+            Backend/horarios-ueb-back/build/reports/tests/test
+            Backend/horarios-ueb-back/bruno/reportes
+          if-no-files-found: ignore
+
+  frontend:
+    name: Frontend (build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Frontend/horarios-ueb
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: Frontend/horarios-ueb/package-lock.json
+      - run: npm ci
+      - run: npm run build

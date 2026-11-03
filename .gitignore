@@ -68,3 +68,6 @@ nbproject/private/
 Thumbs.db
 desktop.ini
 ~$*
+
+# reportes que genera Bruno al correr la colección (las evidencias oficiales van en Pruebas/evidencias)
+Backend/horarios-ueb-back/bruno/reportes/

@@ -6,12 +6,14 @@ import { ApiService } from '../../core/services/api.service';
 import { SessionService } from '../../core/services/session.service';
 import { StoreService } from '../../core/services/store.service';
 import { RUTA_INICIAL } from '../../layout/nav';
+import { PantallaCarga } from '../../shared/pantalla-carga';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [FormsModule, PantallaCarga],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
+    @if (conectando()) { <app-pantalla-carga /> }
     <div class="wrap">
       <section class="hero">
         <div class="marca-ueb">
@@ -106,14 +108,14 @@ export class Login implements OnInit {
   readonly error = signal('');
   readonly aviso = signal('');
   readonly enviando = signal(false);
+  /** Pantalla de carga mientras el servidor responde (en el plan gratuito se duerme y tarda en despertar). */
+  readonly conectando = signal(true);
 
   ngOnInit() {
     if (this.route.snapshot.queryParamMap.get('expirada')) this.aviso.set('Su sesión expiró. Inicie sesión de nuevo.');
-    // el servidor gratuito se duerme tras un rato sin uso: se despierta mientras la persona escribe
-    const lento = setTimeout(() => !this.aviso() && this.aviso.set('Conectando con el servidor… la primera vez del día puede tardar hasta un minuto.'), 2500);
     this.api.salud().then((ok) => {
-      clearTimeout(lento);
-      if (this.aviso().startsWith('Conectando')) this.aviso.set(ok ? '' : 'El servidor no responde. Intente de nuevo en unos minutos.');
+      this.conectando.set(false);
+      if (!ok) this.aviso.set('El servidor no responde en este momento. Intente de nuevo en unos minutos.');
     });
   }
 

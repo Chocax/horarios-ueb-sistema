@@ -66,6 +66,24 @@ class HorariosUebBackApplicationTests {
     }
 
     @Test
+    void sabadoDiurnoSoloComoUltimoRecursoYAulasRepartidas() {
+        CargadorPeriodo.Datos d = cargador.cargar("per-2026-2");
+        GeneradorHorario.Resultado r = generar(d);
+        long sabadoDiurno = r.sesiones().stream()
+                .filter(s -> s.getDia() == 5 && d.catalogo().grupo(s.getGrupoId()).getJornada() == Jornada.DIURNA).count();
+        assertTrue(sabadoDiurno <= 3, () -> "sesiones diurnas en sábado: " + sabadoDiurno);
+        java.util.Set<String> usadas = r.sesiones().stream().map(Sesion::getAulaId).collect(java.util.stream.Collectors.toSet());
+        assertEquals(d.catalogo().aulas().size(), usadas.size(), "todas las aulas deben tener alguna clase");
+        // B5: ningún curso ocupa un aula especial cuyas características no necesita
+        long malUsadas = r.sesiones().stream().filter(s -> {
+            var a = d.catalogo().aula(s.getAulaId());
+            var c = d.catalogo().cursoDeGrupo(s.getGrupoId());
+            return !a.getCaracteristicas().isEmpty() && a.getCaracteristicas().stream().noneMatch(c.getCaracteristicasRequeridas()::contains);
+        }).count();
+        assertEquals(0, malUsadas);
+    }
+
+    @Test
     void elHorarioSemilla2026_1NoTieneViolaciones() {
         CargadorPeriodo.Datos d = cargador.cargar("per-2026-1");
         List<Sesion> sesiones = cargador.sesionesVigentes("per-2026-1");
